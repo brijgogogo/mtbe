@@ -1,4 +1,3 @@
-require("dotenv").config({ debug: process.env.DEBUG });
 const express = require("express");
 require("express-async-errors");
 const expressHandlebars = require("express-handlebars");
@@ -8,9 +7,13 @@ const mountRoutes = require("./routes");
 const fs = require("fs");
 const { promisify } = require("util");
 const cors = require("cors");
+const config = require("./config");
+const bodyParser = require("body-parser");
 
 const app = express(); // application instance
 app.use("/api", cors());
+app.use("/api", bodyParser.json());
+app.use("/api", bodyParser.urlencoded({ extended: true }));
 app.locals.appName = "MTBE";
 
 morgan.token("host", function (req, res) {
@@ -26,7 +29,6 @@ app.use(
     ":method :host :status :param[i] :res[content-length] - :response-time ms"
   )
 );
-
 app.engine(
   "handlebars",
   expressHandlebars({
@@ -39,6 +41,7 @@ app.use(express.static(__dirname + "/public"));
 
 mountRoutes(app);
 
+/*
 const appRouter = express.Router();
 appRouter.route("/products").get((req, res) => {
   const response = { hello: "This is api" };
@@ -46,6 +49,7 @@ appRouter.route("/products").get((req, res) => {
 });
 
 app.use("/api", appRouter);
+*/
 
 const autoViews = {};
 const fileExists = promisify(fs.exists);
@@ -74,12 +78,10 @@ app.use(handlers.notFound);
 // custom 500 page
 app.use(handlers.serverError);
 
-const port = process.env.PORT || 3000;
-
 if (require.main === module) {
-  app.listen(port, () =>
+  app.listen(config.port, () =>
     console.log(
-      `Express started on http://localhost:${port}` +
+      `Express started on http://localhost:${config.port}` +
         `press Ctrl-C to terminate.`
     )
   );

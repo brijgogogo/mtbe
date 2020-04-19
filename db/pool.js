@@ -1,7 +1,7 @@
 const { Pool } = require("pg");
+const config = require("../config");
 
-// environment variable: DATABASE_URL=postgres://{db_username}:{db_password}@{host}:{port}/{db_name}
-// const databaseConfig = { connectionString: process.env.DATABASE_URL };
+/*
 const databaseConfig = {
   host: "localhost",
   port: 5432,
@@ -9,8 +9,9 @@ const databaseConfig = {
   user: "mtbu",
   password: "mtbu@1212",
 };
+*/
 
-const pool = new Pool(databaseConfig);
+const pool = new Pool(config.databaseConfig);
 
 pool.on("conneect", () => {
   console.log("connected to the db");
@@ -18,6 +19,11 @@ pool.on("conneect", () => {
 
 pool.on("error", (err, client) => {
   console.error("Unexpected error in idle client", err);
+});
+
+pool.on("remove", () => {
+  console.log("client removed");
+  // process.exit(0);
 });
 
 module.exports = {
