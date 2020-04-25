@@ -1,4 +1,5 @@
 require("dotenv").config({ debug: process.env.DEBUG });
+const path = require("path");
 
 module.exports = {
   env: process.env.NODE_ENV || "development",
@@ -6,4 +7,5 @@ module.exports = {
   databaseConfig: {
     connectionString: process.env.DATABASE_URL,
   },
+  rootPath: path.resolve(__dirname),
 };

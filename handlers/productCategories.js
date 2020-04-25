@@ -1,4 +1,6 @@
+/*
 const db = require("../db");
+
 
 db.query(
   "SELECT * FORM productCategories WHERE id = $1",
@@ -11,3 +13,4 @@ db.query(
     res.send(res.rows[0]);
   }
 );
+*/

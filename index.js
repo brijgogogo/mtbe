@@ -9,6 +9,9 @@ const { promisify } = require("util");
 const cors = require("cors");
 const config = require("./config");
 const bodyParser = require("body-parser");
+const logger = require("./utils/logger");
+
+logger.info("staring app");
 
 const app = express(); // application instance
 app.use("/api", cors());
@@ -26,9 +29,11 @@ morgan.token("param", function (req, res, param) {
 
 app.use(
   morgan(
-    ":method :host :status :param[i] :res[content-length] - :response-time ms"
+    ":method :host :status :param[i] :res[content-length] - :response-time ms",
+    { stream: logger.stream }
   )
 );
+
 app.engine(
   "handlebars",
   expressHandlebars({
@@ -60,7 +65,7 @@ app.use(async (req, res, next) => {
     try {
       return res.render(autoViews[path]);
     } catch (error) {
-      console.error(error);
+      logger.error(error);
       delete autoViews[path]; // file may have been deleted, but still resides in cache
     }
   }
@@ -80,7 +85,7 @@ app.use(handlers.serverError);
 
 if (require.main === module) {
   app.listen(config.port, () =>
-    console.log(
+    logger.info(
       `Express started on http://localhost:${config.port}` +
         `press Ctrl-C to terminate.`
     )

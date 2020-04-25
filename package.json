@@ -20,8 +20,9 @@
     "express-handlebars": "^4.0.1",
     "lodash": "^4.17.15",
     "morgan": "^1.10.0",
-    "pg": "^8.0.2",
-    "sql": "^0.78.0"
+    "pino": "^6.2.1",
+    "pino-pretty": "^4.0.0",
+    "postgres": "^1.0.2"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
@@ -36,7 +37,9 @@
     "verbose": true,
     "ignore": [
       "*.test.js",
-      "fixtures/*"
+      "fixtures/*",
+      "logs/*",
+      "*.log"
     ],
     "delay": "2500",
     "env": {

@@ -1,3 +1,4 @@
+const logger = require("../utils/logger");
 const title = "Voice that matters";
 
 exports.about = (req, res) => {
@@ -15,10 +16,14 @@ exports.notFound = (req, res) => {
 
 /* eslint-disable no-unused-vars */
 exports.serverError = (err, req, res, next) => {
-  console.error(err.message);
+  const status = err.status || 500;
+  logger.error(
+    `${status} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+  );
+  res.status(status);
+  res.send(`${status} - Server Error`);
   // res.type('text/plain')
-  res.status(500);
   // res.send('500 - Server Error')
-  res.render("500");
+  // res.render("500");
 };
 /* eslint-enable no-unused-vars */
