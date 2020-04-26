@@ -7,6 +7,7 @@ const logger = require("../utils/logger");
 const columns = ["id", "name", "website_url"].concat(dbConstants.metaColumns);
 const insertColumns = columns.slice(1);
 const table = "product_manufacturer";
+const fullCountColumn = "_full_count";
 
 module.exports = {
   getAll: async (options = {}) => {
@@ -28,7 +29,7 @@ module.exports = {
       }
 
       const params = [];
-      const offset = options.skip ? parseInt(options.offset) : 0;
+      const offset = options.offset ? parseInt(options.offset) : 0;
       const limit = options.limit ? parseInt(options.limit) : "NULL";
       const sortBy =
         options.sortBy && columns.includes(options.sortBy)
@@ -59,17 +60,39 @@ module.exports = {
         where = "1 = 1";
       }
 
-      productManufacturers = sql.unsafe(
+      productManufacturers = await sql.unsafe(
         `
-        SELECT ${selectColumns.join(",")} from ${table}
-        where ${where}
+        SELECT ${selectColumns.join(",")}, count(*) OVER() AS ${fullCountColumn}
+        from ${table} where ${where}
         ORDER BY ${sortBy} ${sortDirection}
         LIMIT ${limit} OFFSET ${offset}
       `,
         params
       );
 
-      return productManufacturers;
+      let totalCount = 0;
+
+      if (productManufacturers.length > 0) {
+        logger.info(productManufacturers[0]);
+        totalCount = productManufacturers[0][fullCountColumn];
+
+        // const items = [];
+
+        for (let i = 0; i < productManufacturers.length; i++) {
+          delete productManufacturers[i][fullCountColumn];
+          logger.info(productManufacturers[i]);
+          // items.push(obj);
+        }
+
+        // productManufacturers = items;
+      }
+
+      const result = {
+        items: productManufacturers,
+        totalCount: totalCount,
+      };
+
+      return result;
     } catch (error) {
       logger.error(error);
     }

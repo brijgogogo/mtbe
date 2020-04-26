@@ -86,8 +86,8 @@ app.use(handlers.serverError);
 if (require.main === module) {
   app.listen(config.port, () =>
     logger.info(
-      `Express started on http://localhost:${config.port}` +
-        `press Ctrl-C to terminate.`
+      `Express started on http://localhost:${config.port}
+        press Ctrl-C to terminate.`
     )
   );
 } else {
