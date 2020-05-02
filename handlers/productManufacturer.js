@@ -59,6 +59,26 @@ router.get("/:id", async (req, res) => {
   res.json(values);
 });
 
+router.post("/", async (req, res) => {
+  const options = req.body;
+  const result = await db.add(options);
+  res.json(result);
+});
+
+router.put("/", async (req, res) => {
+  const options = req.body;
+  const result = await db.update(options);
+  res.json(result);
+});
+
+router.delete("/:id", async (req, res) => {
+  const options = {
+    keys: [req.params.id],
+  };
+  const result = await db.delete(options);
+  res.json(result);
+});
+
 module.exports = router;
 
 // result

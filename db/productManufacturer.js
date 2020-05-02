@@ -1,11 +1,25 @@
 const sql = require("./index");
-const dbConstants = require("./dbConstants");
+const dbHelper = require("./dbHelper");
 const utils = require("../utils");
 const logger = require("../utils/logger");
 // const _ = require("lodash");
+//
 
-const columns = ["id", "name", "website_url"].concat(dbConstants.metaColumns);
-const insertColumns = columns.slice(1);
+const columns = ["id", "name", "website_url"].concat(dbHelper.metaColumns());
+const keyColumn = "id";
+const insertColumns = utils.filterValues(
+  columns,
+  keyColumn,
+  dbHelper.modified_by_column,
+  dbHelper.modified_date_column
+);
+const updateColumns = utils.filterValues(
+  columns,
+  keyColumn,
+  dbHelper.created_by_column,
+  dbHelper.created_date_column,
+  dbHelper.source_column
+);
 const table = "product_manufacturer";
 const fullCountColumn = "_full_count";
 
@@ -22,7 +36,7 @@ module.exports = {
       if (options.ids) {
         productManufacturers = await sql`
           select ${sql(selectColumns)} from ${sql(table)}
-          where id in ( ${options.ids} )
+          where ${sql(keyColumn)} in ( ${options.ids} )
           `;
 
         return productManufacturers;
@@ -34,7 +48,7 @@ module.exports = {
       const sortBy =
         options.sortBy && columns.includes(options.sortBy)
           ? options.sortBy
-          : "id";
+          : keyColumn;
       const sortDirection = options.sortDirection
         ? options.sortDirection
         : "ASC";
@@ -73,14 +87,12 @@ module.exports = {
       let totalCount = 0;
 
       if (productManufacturers.length > 0) {
-        logger.info(productManufacturers[0]);
         totalCount = productManufacturers[0][fullCountColumn];
 
         // const items = [];
 
         for (let i = 0; i < productManufacturers.length; i++) {
           delete productManufacturers[i][fullCountColumn];
-          logger.info(productManufacturers[i]);
           // items.push(obj);
         }
 
@@ -98,11 +110,60 @@ module.exports = {
     }
   },
   add: async (options) => {
+    options.items.forEach((e) => {
+      dbHelper.setAddInfo(e, options.userId, insertColumns);
+    });
+
     const addedObjects = await sql`
       INSERT INTO ${sql(table)}
-      ${sql(options.object, insertColumns)}
-      RETURNING id
+      ${sql(options.items, ...insertColumns)}
+      RETURNING *
       `;
+
     return addedObjects;
+  },
+
+  update: async (options) => {
+    const updatedObjects = [];
+
+    for (let i = 0; i < options.items.length; i++) {
+      try {
+        const e = options.items[i];
+        dbHelper.setUpdateInfo(e, options.userId);
+        const obj = utils.filterKeys(e, updateColumns);
+        const columnsToUpdate = Object.keys(obj);
+
+        const result = await sql`
+        UPDATE ${sql(table)} SET
+        ${sql(e, ...columnsToUpdate)}
+        WHERE ${sql(keyColumn)} = ${e.id}
+        RETURNING *
+        `;
+
+        updatedObjects.push(result);
+      } catch (error) {
+        logger.error(error, "update error");
+      }
+    }
+
+    return updatedObjects;
+  },
+
+  delete: async (options) => {
+    const deletedObjects = [];
+
+    for (let i = 0; i < options.keys.length; i++) {
+      const k = options.keys[i];
+      const id = parseInt(k);
+      const result = await sql`
+        DELETE FROM ${sql(table)}
+        WHERE ${sql(keyColumn)} = ${id}
+        RETURNING *
+      `;
+
+      deletedObjects.push(result);
+    }
+
+    return deletedObjects;
   },
 };

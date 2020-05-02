@@ -10,7 +10,12 @@ const removeKeys = (obj, keys) => {
   );
 };
 
+const filterValues = (arr, ...values) => {
+  return arr.filter((e) => !values.includes(e));
+};
+
 module.exports = {
   filterKeys,
   removeKeys,
+  filterValues,
 };
