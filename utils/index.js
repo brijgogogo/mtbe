@@ -1,3 +1,5 @@
+const logger = require("../utils/logger");
+
 const keepKeys = (obj, keys) => {
   return Object.fromEntries(
     Object.entries(obj).filter(([key, val]) => keys.includes(key))
@@ -14,6 +16,10 @@ const removeValues = (arr, ...values) => {
   return arr.filter((e) => !values.includes(e));
 };
 
+const keepValues = (arr, values) => {
+  return arr.filter((e) => values.includes(e));
+};
+
 const reservedQueryKeys = [
   // query string
   "q", // search string
@@ -27,5 +33,6 @@ module.exports = {
   keepKeys,
   removeKeys,
   removeValues,
+  keepValues,
   reservedQueryKeys,
 };

@@ -2,9 +2,9 @@ const sql = require("./index");
 const schemaHelper = require("./schemaHelper");
 const utils = require("../utils");
 const logger = require("../utils/logger");
-// const _ = require("lodash");
 const superstruct = require("superstruct");
 
+const table = "product_manufacturer";
 const keyColumn = "id";
 const nameColumn = "name";
 const websiteUrlColumn = "website_url";
@@ -24,7 +24,6 @@ const updateColumns = utils.removeValues(
   schemaHelper.createdDateColumn,
   schemaHelper.sourceColumn
 );
-const table = "product_manufacturer";
 
 const schema = {
   [keyColumn]: schemaHelper.dataTypes.number,
@@ -40,13 +39,10 @@ const insertSchema = superstruct.struct(
   schemaHelper.insertMetaColumnsSchemaDefaults()
 );
 
-const updateSchema = superstruct.struct(
-  {
-    ...schema,
-    ...schemaHelper.updateMetaColumnsSchema(),
-  },
-  {}
-);
+const updateSchema = superstruct.struct({
+  ...schema,
+  ...schemaHelper.updateMetaColumnsSchema(),
+});
 
 module.exports = {
   getAll: async (options = {}) => {
@@ -55,7 +51,11 @@ module.exports = {
       let selectColumns = columns;
 
       if (options.fields) {
-        selectColumns = utils.keepKeys(options.fields, columns);
+        selectColumns = utils.keepValues(options.fields, columns);
+      }
+
+      if (selectColumns.length == 0) {
+        return { error: "Invalid projection!" };
       }
 
       if (options.ids) {
