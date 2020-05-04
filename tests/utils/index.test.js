@@ -9,7 +9,7 @@ test("filter object keys", () => {
 
   const allowedKeys = ["key1", "key3"];
 
-  const result = utils.filterKeys(obj, allowedKeys);
+  const result = utils.keepKeys(obj, allowedKeys);
   expect(Object.keys(result).sort()).toEqual(allowedKeys.sort());
 });
 

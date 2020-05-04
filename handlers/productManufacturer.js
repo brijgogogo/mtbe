@@ -4,15 +4,6 @@ const router = express.Router();
 const utils = require("../utils");
 const logger = require("../utils/logger");
 
-const reservedQueryKeys = [
-  // query string
-  "q", // search string
-  "s", // field:a/d : sort
-  "l", //<number> : pagination limit
-  "o", //<number> : pagination skip/offset
-  "f", //a,b,c : fields to get separated by comma
-];
-
 // field=value
 
 router.get("/", async (req, res) => {
@@ -42,12 +33,15 @@ router.get("/", async (req, res) => {
       options.fields = req.query.f.split(",");
     }
 
-    options.conditions = utils.removeKeys(req.query, reservedQueryKeys);
+    options.conditions = utils.removeKeys(req.query, utils.reservedQueryKeys);
 
     const values = await db.getAll(options);
     res.json(values);
   } catch (error) {
     logger.error(error);
+    res.status(500);
+    res.send("Request failed!");
+    // throw new Error("Failed to get result");
   }
 });
 
@@ -62,7 +56,13 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const options = req.body;
   const result = await db.add(options);
-  res.json(result);
+  if (result.errors) {
+    res.status(422);
+    res.json({ errors: result.errors });
+  } else {
+    res.status(201);
+    res.json(result.items);
+  }
 });
 
 router.put("/", async (req, res) => {

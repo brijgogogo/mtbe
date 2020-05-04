@@ -1,4 +1,4 @@
-const filterKeys = (obj, keys) => {
+const keepKeys = (obj, keys) => {
   return Object.fromEntries(
     Object.entries(obj).filter(([key, val]) => keys.includes(key))
   );
@@ -10,12 +10,22 @@ const removeKeys = (obj, keys) => {
   );
 };
 
-const filterValues = (arr, ...values) => {
+const removeValues = (arr, ...values) => {
   return arr.filter((e) => !values.includes(e));
 };
 
+const reservedQueryKeys = [
+  // query string
+  "q", // search string
+  "s", // field:a/d : sort
+  "l", //<number> : pagination limit
+  "o", //<number> : pagination skip/offset
+  "f", //a,b,c : fields to get separated by comma
+];
+
 module.exports = {
-  filterKeys,
+  keepKeys,
   removeKeys,
-  filterValues,
+  removeValues,
+  reservedQueryKeys,
 };

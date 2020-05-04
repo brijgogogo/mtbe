@@ -1,27 +1,48 @@
 const sql = require("./index");
-const dbHelper = require("./dbHelper");
+const schemaHelper = require("./schemaHelper");
 const utils = require("../utils");
 const logger = require("../utils/logger");
 // const _ = require("lodash");
-//
+const superstruct = require("superstruct");
 
-const columns = ["id", "name", "website_url"].concat(dbHelper.metaColumns());
 const keyColumn = "id";
-const insertColumns = utils.filterValues(
-  columns,
-  keyColumn,
-  dbHelper.modified_by_column,
-  dbHelper.modified_date_column
+const nameColumn = "name";
+const websiteUrlColumn = "website_url";
+const columns = [keyColumn, nameColumn, websiteUrlColumn].concat(
+  schemaHelper.metaColumns()
 );
-const updateColumns = utils.filterValues(
+const insertColumns = utils.removeValues(
   columns,
   keyColumn,
-  dbHelper.created_by_column,
-  dbHelper.created_date_column,
-  dbHelper.source_column
+  schemaHelper.modifiedByColumn,
+  schemaHelper.modifiedDateColumn
+);
+const updateColumns = utils.removeValues(
+  columns,
+  keyColumn,
+  schemaHelper.createdByColumn,
+  schemaHelper.createdDateColumn,
+  schemaHelper.sourceColumn
 );
 const table = "product_manufacturer";
-const fullCountColumn = "_full_count";
+
+const schema = {
+  [keyColumn]: schemaHelper.dataTypes.number,
+  [nameColumn]: schemaHelper.dataTypes.string,
+  [websiteUrlColumn]: schemaHelper.dataTypes.stringOptional,
+};
+
+const a = utils.keepKeys(schema, [nameColumn, websiteUrlColumn]);
+const b = schemaHelper.insertMetaColumnsSchema();
+console.log(a);
+logger.info(b);
+const insertSchema = superstruct.struct(
+  {
+    ...a,
+    ...b,
+  },
+  schemaHelper.insertMetaColumnsSchemaDefaults()
+);
 
 module.exports = {
   getAll: async (options = {}) => {
@@ -30,7 +51,7 @@ module.exports = {
       let selectColumns = columns;
 
       if (options.fields) {
-        selectColumns = utils.filterKeys(options.fields, columns);
+        selectColumns = utils.keepKeys(options.fields, columns);
       }
 
       if (options.ids) {
@@ -54,7 +75,7 @@ module.exports = {
         : "ASC";
 
       const hasOptionsConditions = Object.keys(options.conditions).length > 0;
-      const conditions = utils.filterKeys(options.conditions, columns);
+      const conditions = utils.keepKeys(options.conditions, columns);
       const hasConditions = Object.keys(conditions).length > 0;
 
       if (hasOptionsConditions && !hasConditions) {
@@ -76,7 +97,9 @@ module.exports = {
 
       productManufacturers = await sql.unsafe(
         `
-        SELECT ${selectColumns.join(",")}, count(*) OVER() AS ${fullCountColumn}
+        SELECT ${selectColumns.join(",")}, count(*) OVER() AS ${
+          schemaHelper.fullCountColumn
+        }
         from ${table} where ${where}
         ORDER BY ${sortBy} ${sortDirection}
         LIMIT ${limit} OFFSET ${offset}
@@ -87,12 +110,12 @@ module.exports = {
       let totalCount = 0;
 
       if (productManufacturers.length > 0) {
-        totalCount = productManufacturers[0][fullCountColumn];
+        totalCount = productManufacturers[0][schemaHelper.fullCountColumn];
 
         // const items = [];
 
         for (let i = 0; i < productManufacturers.length; i++) {
-          delete productManufacturers[i][fullCountColumn];
+          delete productManufacturers[i][schemaHelper.fullCountColumn];
           // items.push(obj);
         }
 
@@ -107,12 +130,33 @@ module.exports = {
       return result;
     } catch (error) {
       logger.error(error);
+      throw error;
     }
   },
   add: async (options) => {
     options.items.forEach((e) => {
-      dbHelper.setAddInfo(e, options.userId, insertColumns);
+      schemaHelper.setAddInfo(e, options.userId, insertColumns);
     });
+
+    const objects = [];
+    const errors = [];
+
+    options.items.forEach((e) => {
+      const [err, result] = insertSchema.validate(e);
+
+      if (err) {
+        logger.info(err, err.toString());
+        errors.push(schemaHelper.toValidationError(err));
+      } else {
+        objects.push(result);
+      }
+    });
+
+    if (errors.length > 0) {
+      return {
+        errors: errors,
+      };
+    }
 
     const addedObjects = await sql`
       INSERT INTO ${sql(table)}
@@ -120,7 +164,9 @@ module.exports = {
       RETURNING *
       `;
 
-    return addedObjects;
+    return {
+      items: addedObjects,
+    };
   },
 
   update: async (options) => {
@@ -129,8 +175,8 @@ module.exports = {
     for (let i = 0; i < options.items.length; i++) {
       try {
         const e = options.items[i];
-        dbHelper.setUpdateInfo(e, options.userId);
-        const obj = utils.filterKeys(e, updateColumns);
+        schemaHelper.setUpdateInfo(e, options.userId);
+        const obj = utils.keepKeys(e, updateColumns);
         const columnsToUpdate = Object.keys(obj);
 
         const result = await sql`
@@ -167,3 +213,4 @@ module.exports = {
     return deletedObjects;
   },
 };
+
