@@ -1,4 +1,5 @@
 const utils = require("../utils");
+const logger = require("../utils/logger");
 
 module.exports = {
   dataTypes: {
@@ -71,6 +72,15 @@ module.exports = {
     let t = this;
     return utils.keepKeys(this.metaColumnsSchemaDefaults(), [t.statusColumn]);
   },
+  updateMetaColumnsSchema: function () {
+    let t = this;
+    return utils.keepKeys(this.metaColumnsSchema(), [
+      t.modifiedByColumn,
+      t.modifiedDateColumn,
+      t.sourceColumn,
+      t.statusColumn,
+    ]);
+  },
   setAddInfo: function (obj, userId) {
     obj[this.createdDateColumn] = new Date();
     obj[this.createdByColumn] = userId;
@@ -88,7 +98,7 @@ module.exports = {
   },
   toValidationError: function (error) {
     const validationError = {
-      item: error.branch[0], // object validated
+      item: Array.isArray(error.branch) ? error.branch[0] : error.branch, // object validated
       errors: {},
     };
 
@@ -107,5 +117,26 @@ module.exports = {
     });
 
     return validationError;
+  },
+  validate: function (objects, schema) {
+    const goodObjects = [];
+    const errors = [];
+
+    objects.forEach((e) => {
+      // logger.info(e, "object");
+      //logger.info({}, typeof e);
+      logger.info(Array.isArray(e), "IsArray");
+      const [err, result] = schema.validate(e);
+
+      if (err) {
+        // logger.error(err, err.toString());
+        logger.error(err.toString());
+        errors.push(this.toValidationError(err));
+      } else {
+        goodObjects.push(result);
+      }
+    });
+
+    return [errors, goodObjects];
   },
 };

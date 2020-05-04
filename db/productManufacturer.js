@@ -32,16 +32,20 @@ const schema = {
   [websiteUrlColumn]: schemaHelper.dataTypes.stringOptional,
 };
 
-const a = utils.keepKeys(schema, [nameColumn, websiteUrlColumn]);
-const b = schemaHelper.insertMetaColumnsSchema();
-console.log(a);
-logger.info(b);
 const insertSchema = superstruct.struct(
   {
-    ...a,
-    ...b,
+    ...utils.keepKeys(schema, [nameColumn, websiteUrlColumn]),
+    ...schemaHelper.insertMetaColumnsSchema(),
   },
   schemaHelper.insertMetaColumnsSchemaDefaults()
+);
+
+const updateSchema = superstruct.struct(
+  {
+    ...schema,
+    ...schemaHelper.updateMetaColumnsSchema(),
+  },
+  {}
 );
 
 module.exports = {
@@ -135,32 +139,21 @@ module.exports = {
   },
   add: async (options) => {
     options.items.forEach((e) => {
-      schemaHelper.setAddInfo(e, options.userId, insertColumns);
+      schemaHelper.setAddInfo(e, options.userId);
     });
 
-    const objects = [];
-    const errors = [];
-
-    options.items.forEach((e) => {
-      const [err, result] = insertSchema.validate(e);
-
-      if (err) {
-        logger.info(err, err.toString());
-        errors.push(schemaHelper.toValidationError(err));
-      } else {
-        objects.push(result);
-      }
-    });
+    const [errors, objects] = schemaHelper.validate(
+      options.items,
+      insertSchema
+    );
 
     if (errors.length > 0) {
-      return {
-        errors: errors,
-      };
+      return { errors: errors };
     }
 
     const addedObjects = await sql`
       INSERT INTO ${sql(table)}
-      ${sql(options.items, ...insertColumns)}
+      ${sql(objects, ...insertColumns)}
       RETURNING *
       `;
 
@@ -172,10 +165,23 @@ module.exports = {
   update: async (options) => {
     const updatedObjects = [];
 
-    for (let i = 0; i < options.items.length; i++) {
+    options.items.forEach((e) => {
+      schemaHelper.setUpdateInfo(e, options.userId);
+    });
+
+    const [errors, objects] = schemaHelper.validate(
+      options.items,
+      updateSchema
+    );
+
+    if (errors.length > 0) {
+      return { errors: errors };
+    }
+
+    for (let i = 0; i < objects.length; i++) {
+      const e = objects[i];
+
       try {
-        const e = options.items[i];
-        schemaHelper.setUpdateInfo(e, options.userId);
         const obj = utils.keepKeys(e, updateColumns);
         const columnsToUpdate = Object.keys(obj);
 
@@ -188,7 +194,12 @@ module.exports = {
 
         updatedObjects.push(result);
       } catch (error) {
-        logger.error(error, "update error");
+        updatedObjects.push({
+          item: e,
+          error: "Update failure",
+        });
+
+        logger.error(error, "Update failure");
       }
     }
 
@@ -207,10 +218,12 @@ module.exports = {
         RETURNING *
       `;
 
-      deletedObjects.push(result);
+      logger.info(result.count, result.command);
+      if (result.count > 0) {
+        deletedObjects.push(result[0]);
+      }
     }
 
     return deletedObjects;
   },
 };
-

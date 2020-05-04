@@ -3,6 +3,7 @@ const express = require("express");
 const router = express.Router();
 const utils = require("../utils");
 const logger = require("../utils/logger");
+const responseHelper = require("./responseHelper");
 
 // field=value
 
@@ -56,19 +57,13 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   const options = req.body;
   const result = await db.add(options);
-  if (result.errors) {
-    res.status(422);
-    res.json({ errors: result.errors });
-  } else {
-    res.status(201);
-    res.json(result.items);
-  }
+  responseHelper.sendAddResponse(res, result);
 });
 
 router.put("/", async (req, res) => {
   const options = req.body;
   const result = await db.update(options);
-  res.json(result);
+  responseHelper.sendUpdateResponse(res, result);
 });
 
 router.delete("/:id", async (req, res) => {
@@ -76,7 +71,7 @@ router.delete("/:id", async (req, res) => {
     keys: [req.params.id],
   };
   const result = await db.delete(options);
-  res.json(result);
+  responseHelper.sendDeleteResponse(res, result);
 });
 
 module.exports = router;
