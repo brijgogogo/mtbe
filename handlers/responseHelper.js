@@ -1,30 +1,31 @@
+const logger = require("../utils/logger");
+
 module.exports = {
-  sendAddResponse: function (res, result) {
+  sendAddResponse: function (ctx, result) {
     if (result.errors) {
-      this.sendValidationErrors(res, result.errors);
+      this.sendValidationErrors(ctx, result.errors);
     } else {
-      res.status(201);
-      res.json(result.items);
+      ctx.status = 201;
+      ctx.body = { items: result.items };
     }
   },
-  sendUpdateResponse: function (res, result) {
-    if (result.errors) {
-      this.sendValidationErrors(res, result.errors);
+  sendUpdateResponse: function (ctx, result) {
+    if (result.errors && result.errors.length > 0) {
+      this.sendValidationErrors(ctx, result.errors);
     } else {
-      res.status(200);
-      res.json(result.items);
+      ctx.body = { items: result.items };
     }
   },
-  sendValidationErrors: function (res, errors) {
-    res.status(422);
-    res.json({ errors: errors });
+  sendValidationErrors: function (ctx, errors) {
+    ctx.status = 422;
+    ctx.body = { errors: errors };
   },
-  sendDeleteResponse: function (res, result) {
+  sendDeleteResponse: function (ctx, result) {
     if (result && result.length > 0) {
-      res.json({ items: result });
+      ctx.body = { items: result };
     } else {
-      res.status(404);
-      res.send("Key does not exist");
+      ctx.status = 404;
+      ctx.body = "Key does not exist";
     }
   },
 };

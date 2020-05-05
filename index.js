@@ -1,96 +1,47 @@
-const express = require("express");
-require("express-async-errors");
-const expressHandlebars = require("express-handlebars");
-const handlers = require("./handlers");
-const morgan = require("morgan");
-const mountRoutes = require("./routes");
-const fs = require("fs");
-const { promisify } = require("util");
-const cors = require("cors");
+const Koa = require("koa");
 const config = require("./config");
-const bodyParser = require("body-parser");
 const logger = require("./utils/logger");
+const routes = require("./routes");
 
 logger.info("staring app");
 
-const app = express(); // application instance
-app.use("/api", cors());
-app.use("/api", bodyParser.json());
-app.use("/api", bodyParser.urlencoded({ extended: true }));
-app.locals.appName = "MTBE";
+const app = new Koa();
+app.env = config.env;
+logger.info(`env: ${app.env}`);
 
-morgan.token("host", function (req, res) {
-  return req.hostname;
+app.on("error", (err, ctx) => {
+  logger.error({ err, ctx }, "server error");
 });
 
-morgan.token("param", function (req, res, param) {
-  return req.params[param];
+const responseHeader = "X-Response-Time";
+
+app.use(async (ctx, next) => {
+  await next();
+  const rt = ctx.response.get(responseHeader);
+  logger.info(`${ctx.method} ${ctx.url} - ${rt}`);
 });
 
-app.use(
-  morgan(
-    ":method :host :status :param[i] :res[content-length] - :response-time ms",
-    { stream: logger.stream }
-  )
-);
-
-app.engine(
-  "handlebars",
-  expressHandlebars({
-    defaultLayout: "main", // views/layouts/main.handlebars
-  })
-);
-app.set("view engine", "handlebars");
-
-app.use(express.static(__dirname + "/public"));
-
-mountRoutes(app);
-
-/*
-const appRouter = express.Router();
-appRouter.route("/products").get((req, res) => {
-  const response = { hello: "This is api" };
-  res.json(response);
+app.use(async (ctx, next) => {
+  const start = Date.now();
+  await next();
+  const ms = Date.now() - start;
+  ctx.set(responseHeader, `${ms}ms`);
 });
 
-app.use("/api", appRouter);
-*/
+app.use(routes.routes());
+app.use(routes.allowedMethods());
 
-const autoViews = {};
-const fileExists = promisify(fs.exists);
-// auto-render file from /view/<path>.handlebars
-app.use(async (req, res, next) => {
-  const path = req.path.toLowerCase();
-  if (autoViews[path]) {
-    try {
-      return res.render(autoViews[path]);
-    } catch (error) {
-      logger.error(error);
-      delete autoViews[path]; // file may have been deleted, but still resides in cache
-    }
-  }
-  if (await fileExists(__dirname + "/views" + path + ".handlebars")) {
-    autoViews[path] = path.replace(/^\//, "");
-    return res.render(autoViews[path]);
-  }
-  // no view found; pass on to 404 handler
-  next();
-});
+logger.info(`listening on port ${config.port}`);
+const server = app.listen(config.port);
 
-// custom 404 page
-app.use(handlers.notFound);
-
-// custom 500 page
-app.use(handlers.serverError);
-
-if (require.main === module) {
-  app.listen(config.port, () =>
-    logger.info(
-      `Express started on http://localhost:${config.port}
-        press Ctrl-C to terminate.`
-    )
-  );
-} else {
-  module.exports = app;
+function cleanup() {
+  console.log("server closing...");
+  server.close(() => {
+    console.log("server closed");
+    process.exit(0);
+  });
 }
+
+process.on("SIGINT", cleanup);
+process.on("SIGTERM", cleanup);
 

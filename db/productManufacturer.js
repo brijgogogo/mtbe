@@ -192,9 +192,11 @@ module.exports = {
         RETURNING *
         `;
 
-        updatedObjects.push(result);
+        for (let i = 0; i < result.count; i++) {
+          updatedObjects.push(result[i]);
+        }
       } catch (error) {
-        updatedObjects.push({
+        errors.push({
           item: e,
           error: "Update failure",
         });
@@ -203,7 +205,7 @@ module.exports = {
       }
     }
 
-    return updatedObjects;
+    return { items: updatedObjects, errors: errors };
   },
 
   delete: async (options) => {

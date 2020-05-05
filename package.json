@@ -13,12 +13,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
+    "@koa/router": "^8.0.8",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-async-errors": "^3.1.1",
-    "express-handlebars": "^4.0.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
     "lodash": "^4.17.15",
     "morgan": "^1.10.0",
     "pino": "^6.2.1",
@@ -43,7 +41,7 @@
       "logs/*",
       "*.log"
     ],
-    "delay": "2500",
+    "delay": "3000",
     "env": {
       "NODE_ENV": "development",
       "PORT": 4000
