@@ -1,4 +1,4 @@
-const logger = require("../utils/logger");
+// const logger = require("../utils/logger");
 
 module.exports = {
   sendAddResponse: function (ctx, result) {
@@ -26,6 +26,14 @@ module.exports = {
     } else {
       ctx.status = 404;
       ctx.body = "Key does not exist";
+    }
+  },
+  sendGetResponse: function (ctx, result) {
+    if (result.error) {
+      ctx.status = 404;
+      ctx.body = result.error;
+    } else {
+      ctx.body = result;
     }
   },
 };

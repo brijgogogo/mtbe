@@ -1,11 +1,13 @@
 // const productsApi = require("./handlers/product");
 // const productCategoriesApi = require("./handlers/productCategories");
 const productManufacturerApi = require("./handlers/productManufacturer");
+const productTypeApi = require("./handlers/productType");
 const Router = require("@koa/router");
+const logger = require("./utils/logger");
 
 const router = new Router();
 router.get("/", (ctx) => {
-  ctx.body = "hello world!";
+  ctx.body = "MT";
 });
 
 router.get("/health", (ctx) => {
@@ -18,12 +20,16 @@ apiRouter.get("/", (ctx) => {
   ctx.body = "MT API";
 });
 
-// apiRouter.use("/api/products", productsApi);
-// app.use("/api/productCategories", productCategoriesApi);
 apiRouter.use(
   "/productManufacturers",
   productManufacturerApi.routes(),
   productManufacturerApi.allowedMethods()
+);
+
+apiRouter.use(
+  "/productType",
+  productTypeApi.routes(),
+  productTypeApi.allowedMethods()
 );
 
 router.use("/api", apiRouter.routes(), apiRouter.allowedMethods());
