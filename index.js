@@ -2,6 +2,7 @@ const Koa = require("koa");
 const config = require("./config");
 const logger = require("./utils/logger");
 const routes = require("./routes");
+const cors = require("@koa/cors");
 
 logger.info("staring app");
 
@@ -14,6 +15,24 @@ app.on("error", (err, ctx) => {
 });
 
 const responseHeader = "X-Response-Time";
+
+logger.info(config.whitelist, "cors-whitelist");
+
+function checkOrigin(ctx) {
+  const requestOrigin = ctx.accept.headers.origin;
+
+  if (!config.whitelist.includes(requestOrigin)) {
+    return ctx.throw(`${requestOrigin} is not valid origin`);
+  }
+
+  return requestOrigin;
+}
+
+app.use(
+  cors({
+    origin: checkOrigin,
+  })
+);
 
 app.use(async (ctx, next) => {
   await next();
@@ -44,4 +63,3 @@ function cleanup() {
 
 process.on("SIGINT", cleanup);
 process.on("SIGTERM", cleanup);
-

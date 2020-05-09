@@ -8,4 +8,5 @@ module.exports = {
     connectionString: process.env.DATABASE_URL,
   },
   rootPath: path.resolve(__dirname),
+  whitelist: (process.env.CORS_WHITELIST || "http://localhost:3000").split(","),
 };
