@@ -27,6 +27,7 @@ const reservedQueryKeys = [
   "l", //<number> : pagination limit
   "o", //<number> : pagination skip/offset
   "f", //a,b,c : fields to get separated by comma
+  "d", //d=1: denormalized query
 ];
 
 module.exports = {

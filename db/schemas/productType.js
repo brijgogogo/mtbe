@@ -52,4 +52,12 @@ typeSchema.updateSchema = superstruct.struct(
   utils.keepKeys(typeSchema.schema, typeSchema.updateColumns)
 );
 
+typeSchema.denormalizedView = typeSchema.table + schemaHelper.viewSuffix;
+typeSchema.productTypeIdNameColumn =
+  typeSchema.productTypeIdColumn + schemaHelper.viewSuffix;
+
+typeSchema.denormalizedColumns = typeSchema.allColumns
+  .concat([typeSchema.productTypeIdNameColumn])
+  .concat(schemaHelper.denormalizedMetaColumns);
+
 module.exports = typeSchema;

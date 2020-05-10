@@ -7,7 +7,12 @@ const sql = db.sql;
 
 function GenericDb(schema) {
   this.getAll = async (options = {}) => {
-    const { allColumns, keyColumn, table, queryColumns } = schema;
+    let { allColumns, keyColumn, table, queryColumns } = schema;
+
+    if (options.denormalized && options.denormalized === 1) {
+      table = schema.denormalizedView;
+      allColumns = schema.denormalizedColumns;
+    }
 
     let selectColumns = schemaHelper.getSelectColumns(
       allColumns,
@@ -131,4 +136,3 @@ function GenericDb(schema) {
 }
 
 module.exports = GenericDb;
-

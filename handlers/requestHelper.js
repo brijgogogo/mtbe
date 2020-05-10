@@ -1,4 +1,5 @@
 const utils = require("../utils");
+const logger = require("../utils/logger");
 
 module.exports = {
   parseQuery: function (req) {
@@ -27,7 +28,15 @@ module.exports = {
       options.fields = req.query.f.split(",");
     }
 
+    if (typeof req.query.d != "undefined") {
+      options.denormalized = parseInt(req.query.d);
+    }
+
+    // logger.info(req.query, "qs");
+
     options.conditions = utils.removeKeys(req.query, utils.reservedQueryKeys);
+
+    logger.info(options, "conditions");
 
     return options;
   },

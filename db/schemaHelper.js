@@ -20,6 +20,7 @@ const schemaHelper = {
   modifiedDateColumn: "modified_date",
   sourceColumn: "source",
   statusColumn: "status",
+  viewSuffix: "_v",
 };
 
 schemaHelper.metaColumns = [
@@ -79,6 +80,18 @@ schemaHelper.updateMetaColumnsSchema = utils.keepKeys(
     schemaHelper.statusColumn,
   ]
 );
+
+schemaHelper.createdByNameColumn =
+  schemaHelper.createdByColumn + schemaHelper.viewSuffix;
+schemaHelper.modifiedByNameColumn =
+  schemaHelper.modifiedByColumn + schemaHelper.viewSuffix;
+
+logger.info(schemaHelper.createdByNameColumn, "n");
+
+schemaHelper.denormalizedMetaColumns = [
+  schemaHelper.createdByNameColumn,
+  schemaHelper.modifiedByNameColumn,
+];
 
 schemaHelper.setAddInfo = function (obj, userId) {
   obj[this.createdDateColumn] = new Date();

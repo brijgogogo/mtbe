@@ -2,12 +2,14 @@ const Router = require("@koa/router");
 const responseHelper = require("./responseHelper");
 const requestHelper = require("./requestHelper");
 const bodyParser = require("koa-bodyparser");
+const logger = require("../utils/logger");
 
 module.exports = function genericRouter(genericDb) {
   const router = new Router();
 
   router.get("/", async (ctx) => {
     const options = requestHelper.parseQuery(ctx.request);
+    logger.info(options, "get-all");
     const result = await genericDb.getAll(options);
     responseHelper.sendGetResponse(ctx, result);
   });
