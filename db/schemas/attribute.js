@@ -10,7 +10,7 @@ const typeSchema = {
   displayNameColumn: "display_name",
   dataTypeColumn: "data_type",
   unitTypeColumn: "unit_type",
-  attributeIdColumn: "attribute_id", // todo: rename parent_attribute_id ?
+  attributeIdColumn: "attribute_id",
   comparisonTypeColumn: "comparison_type",
 };
 

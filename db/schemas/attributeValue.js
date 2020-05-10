@@ -3,42 +3,45 @@ const schemaHelper = require("../schemaHelper");
 const utils = require("../../utils");
 
 const typeSchema = {
-  table: "product_type",
+  table: "attribute_value",
   keyColumn: "id",
-  nameColumn: "name",
-  descriptionColumn: "description",
-  productTypeIdColumn: "product_type_id",
+  attributeIdColumn: "attribute_id",
+  attributeValueNameColumn: "attribute_value_name",
+  attributeValueDescColumn: "attribute_value_desc",
 };
 
 typeSchema.allColumns = [
   typeSchema.keyColumn,
-  typeSchema.nameColumn,
-  typeSchema.descriptionColumn,
-  typeSchema.productTypeIdColumn,
+  typeSchema.attributeIdColumn,
+  typeSchema.attributeValueNameColumn,
+  typeSchema.attributeValueDescColumn,
 ].concat(schemaHelper.metaColumns);
 
-typeSchema.queryColumns = [typeSchema.nameColumn, typeSchema.descriptionColumn];
+typeSchema.queryColumns = [
+  typeSchema.attributeValueNameColumn,
+  typeSchema.attributeValueDescColumn,
+];
 
 typeSchema.insertColumns = [
-  typeSchema.nameColumn,
-  typeSchema.descriptionColumn,
-  typeSchema.productTypeIdColumn,
+  typeSchema.attributeIdColumn,
+  typeSchema.attributeValueNameColumn,
+  typeSchema.attributeValueDescColumn,
 ].concat(schemaHelper.insertMetaColumns);
 
 typeSchema.updateColumns = [
   typeSchema.keyColumn,
-  typeSchema.nameColumn,
-  typeSchema.descriptionColumn,
-  typeSchema.productTypeIdColumn,
+  typeSchema.attributeIdColumn,
+  typeSchema.attributeValueNameColumn,
+  typeSchema.attributeValueDescColumn,
 ].concat(schemaHelper.updateMetaColumns);
 
 typeSchema.schema = {
   ...{
     [typeSchema.keyColumn]: schemaHelper.dataTypes.number,
-    [typeSchema.nameColumn]: schemaHelper.dataTypes.string,
-    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.stringOptional,
-    [typeSchema.productTypeIdColumn]:
-      schemaHelper.dataTypes.numberOptionalOrNull,
+    [typeSchema.attributeIdColumn]: schemaHelper.dataTypes.number,
+    [typeSchema.attributeValueNameColumn]: schemaHelper.dataTypes.string,
+    [typeSchema.attributeValueDescColumn]:
+      schemaHelper.dataTypes.stringOptional,
   },
   ...schemaHelper.metaColumnsSchema,
 };

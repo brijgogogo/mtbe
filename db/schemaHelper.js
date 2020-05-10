@@ -5,6 +5,7 @@ const schemaHelper = {
   dataTypes: {
     number: "number",
     numberOptional: "number?",
+    numberOptionalOrNull: "number? | null",
     string: "string",
     stringOptional: "string?",
     bool: "boolean",
