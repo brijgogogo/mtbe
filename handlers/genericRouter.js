@@ -42,5 +42,14 @@ module.exports = function genericRouter(genericDb) {
     responseHelper.sendDeleteResponse(ctx, result);
   });
 
+  router.post("/op/delete", bodyParser(), async (ctx) => {
+    logger.info(ctx.request.body, "body");
+    const options = {
+      keys: ctx.request.body.keys,
+    };
+    const result = await genericDb.delete(options);
+    responseHelper.sendDeleteResponse(ctx, result);
+  });
+
   return router;
 };

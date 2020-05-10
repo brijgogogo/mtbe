@@ -60,7 +60,7 @@ function cleanup() {
     process.exit(0);
   });
 }
-
+process.on('warning', e => console.warn(e.stack));
 process.on("SIGINT", cleanup);
 process.on("SIGTERM", cleanup);
 process.on("SIGUSR2", cleanup);
