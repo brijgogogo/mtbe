@@ -3,6 +3,8 @@ const config = require("./config");
 const logger = require("./utils/logger");
 const routes = require("./routes");
 const cors = require("@koa/cors");
+const serve = require("koa-static");
+var join = require("path").join;
 
 logger.info("staring app");
 
@@ -34,6 +36,9 @@ app.use(
   })
 );
 
+const publicDir = join(__dirname, "public");
+app.use(serve(publicDir));
+
 app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.get(responseHeader);
@@ -60,7 +65,7 @@ function cleanup() {
     process.exit(0);
   });
 }
-process.on('warning', e => console.warn(e.stack));
+process.on("warning", (e) => console.warn(e.stack));
 process.on("SIGINT", cleanup);
 process.on("SIGTERM", cleanup);
 process.on("SIGUSR2", cleanup);
