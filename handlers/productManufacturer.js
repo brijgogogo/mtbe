@@ -54,6 +54,25 @@ module.exports = router;
  *  }
  */
 
+/**
+ * @apiDefine GetByKeyOrDeleteResponseProductManufacturer
+ * @apiSuccessExample Success-Response:
+ *  HTTP/1.1 200 OK
+ *  [
+ *          {
+ *              "id": 30,
+ *              "name": "Apple",
+ *              "website_url": "apple.com",
+ *              "created_by": 1,
+ *              "created_date": "2020-05-11T22:01:52.229Z",
+ *              "modified_by": null,
+ *              "modified_date": null,
+ *              "source": null,
+ *              "status": 1
+ *          }
+ *  ]
+ */
+
 /*
 /**
  * @api {get} /productManufacturers/ Get/Search
@@ -102,21 +121,7 @@ module.exports = router;
  *
  * @apiParam {Number} id Key of item to get.
  *
- * @apiSuccessExample Success-Response:
- *  HTTP/1.1 200 OK
- *  [
- *      {
- *          "id": 1,
- *          "name": "Samsung",
- *          "website_url": "samsung.com",
- *          "created_by": 1,
- *          "created_date": "2020-04-19T19:14:33.661Z",
- *          "modified_by": null,
- *          "modified_date": null,
- *          "source": null,
- *          "status": 1
- *      }
- *  ]
+ * @apiUse GetByKeyOrDeleteResponseProductManufacturer
  *
  */
 
@@ -128,21 +133,7 @@ module.exports = router;
  *
  * @apiParam {Number} id  Key of item to delete.
  *
- * @apiSuccessExample Success-Response:
- *  HTTP/1.1 200 OK
- *  [
- *      {
- *          "id": 1,
- *          "name": "Samsung",
- *          "website_url": "samsung.com",
- *          "created_by": 1,
- *          "created_date": "2020-04-19T19:14:33.661Z",
- *          "modified_by": null,
- *          "modified_date": null,
- *          "source": null,
- *          "status": 1
- *      }
- *  ]
+ * @apiUse GetByKeyOrDeleteResponseProductManufacturer
  *
  * @apiUse DeleteNotFound
  */
