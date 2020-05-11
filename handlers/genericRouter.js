@@ -38,7 +38,7 @@ module.exports = function genericRouter(genericDb) {
     const options = {
       keys: [ctx.params.id],
     };
-    const result = await genericDb.delete(options);
+    const result = await genericDb.softDelete(options);
     responseHelper.sendDeleteResponse(ctx, result);
   });
 

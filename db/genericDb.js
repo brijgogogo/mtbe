@@ -133,6 +133,28 @@ function GenericDb(schema) {
 
     return deletedObjects;
   };
+
+  this.softDelete = async (options) => {
+    const deletedObjects = [];
+    const { table, keyColumn } = schema;
+
+    for (let i = 0; i < options.keys.length; i++) {
+      const k = options.keys[i];
+      const id = parseInt(k);
+      const result = await sql`
+        UPDATE ${sql(table)} SET ${sql(schemaHelper.statusColumn)} = 2
+        WHERE ${sql(keyColumn)} = ${id}
+        RETURNING *
+      `;
+
+      logger.info(result.count, result.command);
+      if (result.count > 0) {
+        deletedObjects.push(result[0]);
+      }
+    }
+
+    return deletedObjects;
+  };
 }
 
 module.exports = GenericDb;

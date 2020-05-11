@@ -63,7 +63,7 @@ module.exports = {
         SELECT ${selectColumns.join(",")}, count(*) OVER() AS ${
         schemaHelper.fullCountColumn
       }
-        from ${table} where ${where}
+        from ${table} where ${where} AND ${schemaHelper.statusColumn} != 2
         ORDER BY ${sortBy} ${sortDirection}
         LIMIT ${limit} OFFSET ${offset}
       `,
