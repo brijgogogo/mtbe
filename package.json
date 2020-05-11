@@ -50,5 +50,14 @@
       "NODE_ENV": "development",
       "PORT": 4000
     }
+  },
+  "apidoc": {
+    "name": "MTBE",
+    "version": "0.1.0",
+    "description": "MTBE Api",
+    "apidoc": {
+      "title": "MTBE Api",
+      "url": "https://api.mtbe.com/api/"
+    }
   }
 }
