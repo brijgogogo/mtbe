@@ -53,3 +53,46 @@ module.exports = function genericRouter(genericDb) {
 
   return router;
 };
+
+/**
+ * @apiDefine NotFoundError
+ *
+ * @apiError NotFound No records were found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "NotFound"
+ *     }
+ */
+
+/**
+ * @apiDefine DeleteNotFound
+ *
+ * @apiError NotFound Item not found.
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *       Key does not exist
+ */
+
+/**
+ * @apiDefine queryString
+ *
+ * @apiDescription Allows to search, paginate, project, denormalize records
+ *
+ * Query String options:
+ *
+ * q=[serachString]
+ *
+ * s=[sortField]:[a/d]  (Sort by field. a=ASC, d=DESC)
+ *
+ * l=[limit]         (limit number of records)
+ *
+ * o=[offset]        (number of records to offset/skip)
+ *
+ * f=[field1,field2]   (specific fields to get)
+ *
+ * d=1   (denormalized/join query)
+ *
+ */

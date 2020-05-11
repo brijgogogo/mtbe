@@ -9,29 +9,7 @@ const router = genericRouter(genericDb);
 module.exports = router;
 
 /**
- * @apiDefine NotFoundError
- *
- * @apiError NotFound No records were found.
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
- *     {
- *       "error": "NotFound"
- *     }
- */
-
-/**
- * @apiDefine DeleteNotFound
- *
- * @apiError NotFound Item not found.
- *
- * @apiErrorExample Error-Response:
- *     HTTP/1.1 404 Not Found
- *       Key does not exist
- */
-
-/**
- * @apiDefine AddModel
+ * @apiDefine AddModelProductManufacturer
  * @apiParam {Object} RequestObject Items to add and user id in format:
  *
  *    {
@@ -43,7 +21,7 @@ module.exports = router;
  */
 
 /**
- * @apiDefine UpdateModel
+ * @apiDefine UpdateModelProductManufacturer
  * @apiParam {Object} RequestObject Items to update and user id in format:
  *
  *    {
@@ -55,7 +33,7 @@ module.exports = router;
  */
 
 /**
- * @apiDefine AddOrUpdateResponse
+ * @apiDefine AddOrUpdateResponseProductManufacturer
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *
@@ -74,27 +52,6 @@ module.exports = router;
  *          }
  *      ]
  *  }
- */
-
-/**
- * @apiDefine queryString
- *
- * @apiDescription Allows to search, paginate, project, denormalize records
- *
- * Query String options:
- *
- * q=[serachString]
- *
- * s=[sortField]:[a/d]  (Sort by field. a=ASC, d=DESC)
- *
- * l=[limit]         (limit number of records)
- *
- * o=[offset]        (number of records to offset/skip)
- *
- * f=[field1,field2]   (specific fields to get)
- *
- * d=1   (denormalized/join query)
- *
  */
 
 /*
@@ -195,9 +152,9 @@ module.exports = router;
  * @apiName AddProductManufacturer
  * @apiGroup ProductManufacturer
  *
- * @apiUse AddModel
+ * @apiUse AddModelProductManufacturer
  *
- * @apiUse AddOrUpdateResponse
+ * @apiUse AddOrUpdateResponseProductManufacturer
  *
  */
 
@@ -206,8 +163,8 @@ module.exports = router;
  * @apiName UpdateProductManufacturer
  * @apiGroup ProductManufacturer
  *
- * @apiUse UpdateModel
+ * @apiUse UpdateModelProductManufacturer
  *
- * @apiUse AddOrUpdateResponse
+ * @apiUse AddOrUpdateResponseProductManufacturer
  *
  */
