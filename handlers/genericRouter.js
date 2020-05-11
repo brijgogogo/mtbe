@@ -96,3 +96,16 @@ module.exports = function genericRouter(genericDb) {
  * d=1   (denormalized/join query)
  *
  */
+
+/**
+ * @apiDefine BulkDelete
+ *
+ * @apiDescription Deletes items for provided keys.
+ *
+ * @apiParam {Object} RequestObject Keys of items to delete
+ *
+ *    {
+ *      "keys": [17]
+ *    }
+ *
+ */

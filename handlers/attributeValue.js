@@ -151,3 +151,13 @@ module.exports = router;
  * @apiUse AddOrUpdateResponseAttributeValue
  *
  */
+
+/**
+ * @api {post} /attributeValues/op/delete Bulk Delete
+ * @apiName BulkDeleteAttributeValue
+ * @apiGroup AttributeValue
+ *
+ * @apiUse BulkDelete
+ *
+ * @apiUse AddOrUpdateResponseAttributeValue
+ */

@@ -159,3 +159,13 @@ module.exports = router;
  * @apiUse AddOrUpdateResponseProductManufacturer
  *
  */
+
+/**
+ * @api {post} /productManufacturers/op/delete Bulk Delete
+ * @apiName BulkDeleteProductManufacturer
+ * @apiGroup ProductManufacturer
+ *
+ * @apiUse BulkDelete
+ *
+ * @apiUse AddOrUpdateResponseProductManufacturer
+ */
