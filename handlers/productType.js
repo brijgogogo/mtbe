@@ -98,7 +98,8 @@ module.exports = router;
  *              "source": null,
  *              "status": 1
  *          }
- *      ]
+ *      ],
+ *      "totalCount": 1
  *  }
  *
  *  @apiUse NotFoundError
@@ -151,7 +152,6 @@ module.exports = router;
  * @apiUse AddOrUpdateResponseProductType
  *
  */
-
 
 /**
  * @api {post} /productTypes/op/delete Bulk Delete
