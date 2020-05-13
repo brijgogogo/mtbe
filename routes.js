@@ -5,6 +5,7 @@ const productTypeApi = require("./handlers/productType");
 const atributeApi = require("./handlers/attribute");
 const atributeValueApi = require("./handlers/attributeValue");
 const productTypeAttributeApi = require("./handlers/productTypeAttribute");
+const productApi = require("./handlers/product");
 const Router = require("@koa/router");
 const logger = require("./utils/logger");
 
@@ -52,6 +53,8 @@ apiRouter.use(
   productTypeAttributeApi.routes(),
   productTypeAttributeApi.allowedMethods()
 );
+
+apiRouter.use("/products", productApi.routes(), productApi.allowedMethods());
 
 router.use("/api", apiRouter.routes(), apiRouter.allowedMethods());
 
