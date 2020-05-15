@@ -12,6 +12,7 @@ const logger = require("./utils/logger");
 const router = new Router();
 router.get("/", (ctx) => {
   ctx.body = "MT";
+  // throw Error("bang!");
 });
 
 router.get("/health", (ctx) => {

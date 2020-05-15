@@ -1,14 +1,20 @@
+// "use strict";
+
 const Koa = require("koa");
 const config = require("./config");
 const logger = require("./utils/logger");
 const routes = require("./routes");
 const cors = require("@koa/cors");
 const serve = require("koa-static");
-var join = require("path").join;
+const join = require("path").join;
+const pino = require("koa-pino-logger");
+const processHelper = require("./utils/processHelper");
 
 logger.info("staring app");
 
 const app = new Koa();
+app.use(pino());
+
 app.env = config.env;
 logger.info(`env: ${app.env}`);
 
@@ -42,7 +48,7 @@ app.use(serve(publicDir));
 app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.get(responseHeader);
-  logger.info(`${ctx.method} ${ctx.url} - ${rt}`);
+  ctx.log.info(`${ctx.method} ${ctx.url} - ${rt}`);
 });
 
 app.use(async (ctx, next) => {
@@ -58,14 +64,13 @@ app.use(routes.allowedMethods());
 logger.info(`listening on port ${config.port}`);
 const server = app.listen(config.port);
 
-function cleanup() {
-  console.log("server closing...");
+function stopServer() {
+  logger.warn("server closing...");
   server.close(() => {
-    console.log("server closed");
-    process.exit(0);
+    logger.warn("server closed");
   });
 }
-process.on("warning", (e) => console.warn(e.stack));
-process.on("SIGINT", cleanup);
-process.on("SIGTERM", cleanup);
-process.on("SIGUSR2", cleanup);
+
+processHelper.onExit(stopServer);
+
+module.exports = server;

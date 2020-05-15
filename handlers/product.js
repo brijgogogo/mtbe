@@ -3,7 +3,7 @@ const schema = require("../db/schemas/product");
 const genericRouter = require("./genericRouter");
 const logger = require("../utils/logger");
 
-logger.info(schema, "product schema");
+// logger.info(schema, "product schema");
 const genericDb = new GenericDb(schema);
 const router = genericRouter(genericDb);
 module.exports = router;

@@ -9,7 +9,7 @@ module.exports = function genericRouter(genericDb) {
 
   router.get("/", async (ctx) => {
     const options = requestHelper.parseQuery(ctx.request);
-    logger.info(options, "get-all");
+    // logger.info(options, "get-all");
     const result = await genericDb.getAll(options);
     responseHelper.sendGetResponse(ctx, result);
   });
@@ -43,7 +43,7 @@ module.exports = function genericRouter(genericDb) {
   });
 
   router.post("/op/delete", bodyParser(), async (ctx) => {
-    logger.info(ctx.request.body, "body");
+    // logger.info(ctx.request.body, "body");
     const options = {
       keys: ctx.request.body.keys,
     };

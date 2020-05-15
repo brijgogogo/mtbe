@@ -9,4 +9,14 @@ module.exports = {
   },
   rootPath: path.resolve(__dirname),
   whitelist: (process.env.CORS_WHITELIST || "http://localhost:3000").split(","),
+  // logLevel: process.env.LOG_LEVEL || "info",
+  mailConfig: {
+    host: process.env.MAIL_SMTP_HOST,
+    port: process.env.MAIL_PORT,
+    secure: process.env.MAIL_SECURE == "1",
+    auth: {
+      user: process.env.MAIL_USER_ID,
+      pass: process.env.MAIL_PWD,
+    },
+  },
 };

@@ -36,7 +36,7 @@ module.exports = {
 
     options.conditions = utils.removeKeys(req.query, utils.reservedQueryKeys);
 
-    logger.info(options, "conditions");
+    // logger.info(options, "conditions");
 
     return options;
   },

@@ -105,7 +105,7 @@ function GenericDb(schema) {
           error: "Update failure",
         });
 
-        logger.error(error, "Update failure");
+        // logger.error(error, "Update failure");
       }
     }
 
@@ -125,7 +125,7 @@ function GenericDb(schema) {
         RETURNING *
       `;
 
-      logger.info(result.count, result.command);
+      // logger.info(result.count, result.command);
       if (result.count > 0) {
         deletedObjects.push(result[0]);
       }
@@ -147,7 +147,7 @@ function GenericDb(schema) {
         RETURNING *
       `;
 
-      logger.info(result.count, result.command);
+      // logger.info(result.count, result.command);
       if (result.count > 0) {
         deletedObjects.push(result[0]);
       }

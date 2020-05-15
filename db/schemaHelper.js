@@ -86,7 +86,7 @@ schemaHelper.createdByNameColumn =
 schemaHelper.modifiedByNameColumn =
   schemaHelper.modifiedByColumn + schemaHelper.viewSuffix;
 
-logger.info(schemaHelper.createdByNameColumn, "n");
+// logger.info(schemaHelper.createdByNameColumn, "n");
 
 schemaHelper.denormalizedMetaColumns = [
   schemaHelper.createdByNameColumn,
@@ -139,7 +139,7 @@ schemaHelper.validate = function (objects, schema) {
   objects.forEach((e) => {
     // logger.info(e, "object");
     //logger.info({}, typeof e);
-    logger.info(Array.isArray(e), "IsArray");
+    // logger.info(Array.isArray(e), "IsArray");
     const [err, result] = schema.validate(e);
 
     if (err) {
