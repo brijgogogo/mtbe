@@ -2,8 +2,14 @@ const utils = require("../utils");
 const logger = require("../utils/logger");
 
 module.exports = {
-  parseQuery: function (req) {
+  parseQuery: function (ctx) {
     const options = {};
+
+    if (ctx.params && ctx.params.id) {
+      options.ids = [ctx.params.id];
+    }
+
+    const req = ctx.request;
 
     if (typeof req.query.q != "undefined") {
       options.query = req.query.q;

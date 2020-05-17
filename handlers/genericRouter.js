@@ -8,16 +8,14 @@ module.exports = function genericRouter(genericDb) {
   const router = new Router();
 
   router.get("/", async (ctx) => {
-    const options = requestHelper.parseQuery(ctx.request);
+    const options = requestHelper.parseQuery(ctx);
     // logger.info(options, "get-all");
     const result = await genericDb.getAll(options);
     responseHelper.sendGetResponse(ctx, result);
   });
 
   router.get("/:id", async (ctx) => {
-    const options = {
-      ids: [ctx.params.id],
-    };
+    const options = requestHelper.parseQuery(ctx);
     const values = await genericDb.getAll(options);
     ctx.body = values;
   });
