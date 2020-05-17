@@ -1,4 +1,4 @@
-const superstruct = require("superstruct");
+// const superstruct = require("superstruct");
 const schemaHelper = require("../schemaHelper");
 const utils = require("../../utils");
 
@@ -55,23 +55,26 @@ typeSchema.updateColumns = [
 typeSchema.schema = {
   ...{
     [typeSchema.keyColumn]: schemaHelper.dataTypes.number,
-    [typeSchema.nameColumn]: schemaHelper.dataTypes.string,
-    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.stringOptional,
+    [typeSchema.nameColumn]: schemaHelper.dataTypes.nonEmptyString,
+    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.string,
     [typeSchema.displayNameColumn]: schemaHelper.dataTypes.string,
-    [typeSchema.dataTypeColumn]: schemaHelper.dataTypes.number,
-    [typeSchema.unitTypeColumn]: schemaHelper.dataTypes.stringOptional,
-    [typeSchema.attributeIdColumn]: schemaHelper.dataTypes.numberOptional,
-    [typeSchema.comparisonTypeColumn]: schemaHelper.dataTypes.stringOptional,
+    [typeSchema.dataTypeColumn]: schemaHelper.dataTypes.numberOptionalOrNull,
+    [typeSchema.unitTypeColumn]: schemaHelper.dataTypes.stringOptionalOrNull,
+    [typeSchema.attributeIdColumn]: schemaHelper.dataTypes.numberOptionalOrNull,
+    [typeSchema.comparisonTypeColumn]:
+      schemaHelper.dataTypes.stringOptionalOrNull,
   },
   ...schemaHelper.metaColumnsSchema,
 };
 
-typeSchema.insertSchema = superstruct.struct(
+//typeSchema.insertSchema = superstruct.struct(
+typeSchema.insertSchema = schemaHelper.struct(
   utils.keepKeys(typeSchema.schema, typeSchema.insertColumns),
   schemaHelper.insertMetaColumnsSchemaDefaults
 );
 
-typeSchema.updateSchema = superstruct.struct(
+// typeSchema.updateSchema = superstruct.struct(
+typeSchema.updateSchema = schemaHelper.struct(
   utils.keepKeys(typeSchema.schema, typeSchema.updateColumns)
 );
 

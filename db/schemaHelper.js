@@ -1,18 +1,73 @@
 const utils = require("../utils");
 const logger = require("../utils/logger");
+const { superstruct, struct } = require("superstruct");
+
+const customStruct = superstruct({
+  types: {
+    notEmpty: (v) => v.length > 0,
+  },
+});
+
+const dataTypes = {
+  number: "number",
+  numberOptional: "number?",
+  numberOptionalOrNull: "number? | null",
+  string: "string",
+  stringOptional: "string?",
+  stringOptionalOrNull: "string? | null",
+  // nonEmptyString: customStruct.intersection(["string", "notEmpty"]),
+  nonEmptyString: "string & notEmpty",
+  /*  nonEmptyString: customStruct.intersection([
+    "string",
+    function (v) {
+      if (v.length == 0)
+        return {
+          failures: [
+            {
+              type: "empty string",
+            },
+          ],
+        };
+    },
+  ]),
+  */
+  nonEmtpyStringOptionalOrNull: "(string? & notEmpty) | null", // todo: test
+  bool: "boolean",
+  boolOptional: "boolean?",
+  date: "date",
+  dateOptional: "date?",
+};
+
+function isString(value) {
+  return typeof value === "string";
+}
+
+const getErrorDesc = (errorType, value) => {
+  if (value === undefined) {
+    return "Value required";
+  } else if (errorType === undefined) {
+    return "Unknown attribute";
+  } else if (errorType === null) {
+    return "Invalid value";
+  }
+
+  switch (errorType) {
+    case dataTypes.string:
+    case dataTypes.number:
+    case dataTypes.bool:
+      return "Value required";
+    case dataTypes.nonEmptyString:
+      if (isString(value) && value.length == 0) {
+        return "Invalid empty value";
+      }
+  }
+
+  return "Invalid value";
+};
 
 const schemaHelper = {
-  dataTypes: {
-    number: "number",
-    numberOptional: "number?",
-    numberOptionalOrNull: "number? | null",
-    string: "string",
-    stringOptional: "string?",
-    bool: "boolean",
-    boolOptional: "boolean?",
-    date: "date",
-    dateOptional: "date?",
-  },
+  struct: customStruct,
+  dataTypes: dataTypes,
   fullCountColumn: "_full_count",
   createdByColumn: "created_by",
   createdDateColumn: "created_date",
@@ -121,13 +176,8 @@ schemaHelper.toValidationError = function (error) {
     const value = e.value;
     const type = e.type;
 
-    if (value === undefined) {
-      validationError.errors[key] = "required";
-    } else if (type === undefined) {
-      validationError.errors[key] = "unknown attribute";
-    } else {
-      validationError.errors[key] = "invalid";
-    }
+    // validationError.errors[key] = "invalid";
+    validationError.errors[key] = getErrorDesc(type, value);
   });
 
   return validationError;
@@ -143,8 +193,8 @@ schemaHelper.validate = function (objects, schema) {
     const [err, result] = schema.validate(e);
 
     if (err) {
-      // logger.error(err, err.toString());
-      logger.error(err.toString());
+      logger.error(err, err.toString());
+      // logger.error(err.toString());
       errors.push(this.toValidationError(err));
     } else {
       goodObjects.push(result);
