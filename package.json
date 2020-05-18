@@ -7,7 +7,7 @@
     "start": "node index.js | pino-tee warn ./logs/warn-logs > ./logs/all-logs",
     "dev": "nodemon index.js | pino-pretty --translateTime --levelFirst",
     "test": "jest --watchAll",
-    "lint": "eslint index.js lib",
+    "lint": "eslint .",
     "sql": "node sqlGenerator.js",
     "docs": "apidoc -o public/docs -i ./ -f \".*\\.js$\" -e \"node_modules\" -e \"public\""
   },
@@ -64,5 +64,8 @@
       "title": "MTBE Api",
       "url": "https://api.mtbe.com/api/"
     }
+  },
+  "prettier": {
+    "tabWidth": 2
   }
 }

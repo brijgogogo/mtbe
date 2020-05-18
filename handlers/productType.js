@@ -1,6 +1,7 @@
 const GenericDb = require("../db/genericDb");
 const schema = require("../db/schemas/productType");
 const genericRouter = require("./genericRouter");
+// eslint-disable-next-line no-unused-vars
 const logger = require("../utils/logger");
 
 // logger.info(schema, "productType schema");
