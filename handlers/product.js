@@ -1,7 +1,7 @@
 const GenericDb = require("../db/genericDb");
 const schema = require("../db/schemas/product");
 const genericRouter = require("./genericRouter");
-const logger = require("../utils/logger");
+// const logger = require("../utils/logger");
 
 // logger.info(schema, "product schema");
 const genericDb = new GenericDb(schema);
