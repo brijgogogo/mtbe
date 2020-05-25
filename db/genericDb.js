@@ -1,9 +1,6 @@
 const db = require("./index");
 const schemaHelper = require("./schemaHelper");
-const utils = require("../utils");
 const logger = require("../utils/logger");
-
-const sql = db.sql;
 
 function GenericDb(schema) {
   this.getAll = async (options = {}) => {
@@ -13,6 +10,9 @@ function GenericDb(schema) {
       table = schema.denormalizedView;
       allColumns = schema.denormalizedColumns;
     }
+
+    logger.info(allColumns, "allColumns");
+    logger.info(options.fields, "fields");
 
     let selectColumns = schemaHelper.getSelectColumns(
       allColumns,
@@ -42,7 +42,7 @@ function GenericDb(schema) {
       schemaHelper.setAddInfo(e, options.userId);
     });
 
-    const { insertSchema, table, insertColumns } = schema;
+    const { insertSchema, insertColumns } = schema;
 
     const [errors, objects] = schemaHelper.validate(
       options.items,
@@ -53,11 +53,15 @@ function GenericDb(schema) {
       return { errors: errors };
     }
 
-    const addedObjects = await sql`
-      INSERT INTO ${sql(table)}
-      ${sql(objects, ...insertColumns)}
-      RETURNING *
-      `;
+    logger.info(insertColumns, "insert columns");
+
+    const cs = db.getColumnSet(insertColumns, schema);
+
+    logger.info(cs, "IQ");
+
+    const q = db.pgp.helpers.insert(objects, cs) + " RETURNING *";
+    logger.info(q, "insert query");
+    const addedObjects = await db.db.map(q, [], (a) => a);
 
     return {
       items: addedObjects,
@@ -65,8 +69,6 @@ function GenericDb(schema) {
   };
 
   this.update = async (options) => {
-    const updatedObjects = [];
-
     options.items.forEach((e) => {
       schemaHelper.setUpdateInfo(e, options.userId);
     });
@@ -82,76 +84,53 @@ function GenericDb(schema) {
       return { errors: errors };
     }
 
-    for (let i = 0; i < objects.length; i++) {
-      const e = objects[i];
+    const cs = db.getColumnSet(updateColumns, schema);
+    const q =
+      db.pgp.helpers.update(objects, cs) +
+      ` WHERE v."${keyColumn}" = t."${keyColumn}"`;
+    const res = await db.db.none(q);
+    logger.info(res, "update result");
 
-      try {
-        const obj = utils.keepKeys(e, updateColumns);
-        const columnsToUpdate = Object.keys(obj);
+    const ids = objects.map((d) => d.id);
+    const updatedObjects = await db.getById(
+      table,
+      schema.allColumns,
+      keyColumn,
+      ids
+    );
 
-        const result = await sql`
-        UPDATE ${sql(table)} SET
-        ${sql(e, ...columnsToUpdate)}
-        WHERE ${sql(keyColumn)} = ${e.id}
-        RETURNING *
-        `;
-
-        for (let i = 0; i < result.count; i++) {
-          updatedObjects.push(result[i]);
-        }
-      } catch (error) {
-        errors.push({
-          item: e,
-          error: "Update failure",
-        });
-
-        // logger.error(error, "Update failure");
-      }
-    }
+    // only-set property update
+    // const obj = utils.keepKeys(e, updateColumns);
+    // const columnsToUpdate = Object.keys(obj);
 
     return { items: updatedObjects, errors: errors };
   };
 
   this.delete = async (options) => {
-    const deletedObjects = [];
     const { table, keyColumn } = schema;
 
-    for (let i = 0; i < options.keys.length; i++) {
-      const k = options.keys[i];
-      const id = parseInt(k);
-      const result = await sql`
-        DELETE FROM ${sql(table)}
-        WHERE ${sql(keyColumn)} = ${id}
-        RETURNING *
-      `;
-
-      // logger.info(result.count, result.command);
-      if (result.count > 0) {
-        deletedObjects.push(result[0]);
-      }
-    }
+    const q =
+      "DELETE FROM ${_table:name} WHERE ${_keyColumn:name} IN (${ids:csv}) RETURNING *";
+    const deletedObjects = await db.db.any(q, {
+      _table: table,
+      _keyColumn: keyColumn,
+      ids: options.keys,
+    });
 
     return deletedObjects;
   };
 
   this.softDelete = async (options) => {
-    const deletedObjects = [];
     const { table, keyColumn } = schema;
 
-    for (let i = 0; i < options.keys.length; i++) {
-      const k = options.keys[i];
-      const id = parseInt(k);
-      const result = await sql`
-        UPDATE ${sql(table)} SET ${sql(schemaHelper.statusColumn)} = 2
-        WHERE ${sql(keyColumn)} = ${id}
-        RETURNING *
-      `;
-
-      // logger.info(result.count, result.command);
-      if (result.count > 0) {
-        deletedObjects.push(result[0]);
-      }
-    }
+    const q =
+      "UPDATE ${_table:name} SET ${_statusColumn:name} = 2 WHERE ${_keyColumn:name} IN (${ids:csv}) RETURNING *";
+    const deletedObjects = await db.db.any(q, {
+      _table: table,
+      _statusColumn: schemaHelper.statusColumn,
+      _keyColumn: keyColumn,
+      ids: options.keys,
+    });
 
     return deletedObjects;
   };

@@ -3,45 +3,44 @@ const schemaHelper = require("../schemaHelper");
 const utils = require("../../utils");
 
 const typeSchema = {
-  table: "attribute_value",
+  table: "attrValue",
   keyColumn: "id",
-  attributeIdColumn: "attribute_id",
-  attributeValueNameColumn: "attribute_value_name",
-  attributeValueDescColumn: "attribute_value_desc",
+  attrIdColumn: "attrId",
+  attrValueTextColumn: "attrValueText",
+  attrValueDescColumn: "attrValueDesc",
 };
 
 typeSchema.allColumns = [
   typeSchema.keyColumn,
-  typeSchema.attributeIdColumn,
-  typeSchema.attributeValueNameColumn,
-  typeSchema.attributeValueDescColumn,
+  typeSchema.attrIdColumn,
+  typeSchema.attrValueTextColumn,
+  typeSchema.attrValueDescColumn,
 ].concat(schemaHelper.metaColumns);
 
 typeSchema.queryColumns = [
-  typeSchema.attributeValueNameColumn,
-  typeSchema.attributeValueDescColumn,
+  typeSchema.attrValueTextColumn,
+  typeSchema.attrValueDescColumn,
 ];
 
 typeSchema.insertColumns = [
-  typeSchema.attributeIdColumn,
-  typeSchema.attributeValueNameColumn,
-  typeSchema.attributeValueDescColumn,
+  typeSchema.attrIdColumn,
+  typeSchema.attrValueTextColumn,
+  typeSchema.attrValueDescColumn,
 ].concat(schemaHelper.insertMetaColumns);
 
 typeSchema.updateColumns = [
   typeSchema.keyColumn,
-  typeSchema.attributeIdColumn,
-  typeSchema.attributeValueNameColumn,
-  typeSchema.attributeValueDescColumn,
+  typeSchema.attrIdColumn,
+  typeSchema.attrValueTextColumn,
+  typeSchema.attrValueDescColumn,
 ].concat(schemaHelper.updateMetaColumns);
 
 typeSchema.schema = {
   ...{
     [typeSchema.keyColumn]: schemaHelper.dataTypes.number,
-    [typeSchema.attributeIdColumn]: schemaHelper.dataTypes.number,
-    [typeSchema.attributeValueNameColumn]: schemaHelper.dataTypes.string,
-    [typeSchema.attributeValueDescColumn]:
-      schemaHelper.dataTypes.stringOptional,
+    [typeSchema.attrIdColumn]: schemaHelper.dataTypes.number,
+    [typeSchema.attrValueTextColumn]: schemaHelper.dataTypes.string,
+    [typeSchema.attrValueDescColumn]: schemaHelper.dataTypes.stringOptional,
   },
   ...schemaHelper.metaColumnsSchema,
 };
@@ -54,5 +53,12 @@ typeSchema.insertSchema = superstruct.struct(
 typeSchema.updateSchema = superstruct.struct(
   utils.keepKeys(typeSchema.schema, typeSchema.updateColumns)
 );
+
+typeSchema.denormalizedView = typeSchema.table + schemaHelper.viewSuffix;
+typeSchema.attrIdNameColumn = typeSchema.attrIdColumn + schemaHelper.viewSuffix;
+
+typeSchema.denormalizedColumns = typeSchema.allColumns
+  .concat([typeSchema.attrIdNameColumn])
+  .concat(schemaHelper.denormalizedMetaColumns);
 
 module.exports = typeSchema;

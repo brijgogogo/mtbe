@@ -7,8 +7,11 @@ const atributeValueApi = require("./handlers/attributeValue");
 const productTypeAttributeApi = require("./handlers/productTypeAttribute");
 const productApi = require("./handlers/product");
 const productAttributeValueApi = require("./handlers/productAttributeValue");
+const unitTypeApi = require("./handlers/unitType");
+const comparisonTypeApi = require("./handlers/comparisonType");
+const dataTypeApi = require("./handlers/dataType");
 const Router = require("@koa/router");
-const logger = require("./utils/logger");
+// const logger = require("./utils/logger");
 
 const router = new Router();
 router.get("/", (ctx) => {
@@ -27,18 +30,6 @@ apiRouter.get("/", (ctx) => {
 });
 
 apiRouter.use(
-  "/productManufacturers",
-  productManufacturerApi.routes(),
-  productManufacturerApi.allowedMethods()
-);
-
-apiRouter.use(
-  "/productTypes",
-  productTypeApi.routes(),
-  productTypeApi.allowedMethods()
-);
-
-apiRouter.use(
   "/attributes",
   atributeApi.routes(),
   atributeApi.allowedMethods()
@@ -48,6 +39,18 @@ apiRouter.use(
   "/attributeValues",
   atributeValueApi.routes(),
   atributeValueApi.allowedMethods()
+);
+
+apiRouter.use(
+  "/productManufacturers",
+  productManufacturerApi.routes(),
+  productManufacturerApi.allowedMethods()
+);
+
+apiRouter.use(
+  "/productTypes",
+  productTypeApi.routes(),
+  productTypeApi.allowedMethods()
 );
 
 apiRouter.use(
@@ -62,6 +65,14 @@ apiRouter.use(
   "/productAttributeValues",
   productAttributeValueApi.routes(),
   productAttributeValueApi.allowedMethods()
+);
+
+apiRouter.use("/dataTypes", dataTypeApi.routes(), dataTypeApi.allowedMethods());
+apiRouter.use("/unitTypes", unitTypeApi.routes(), unitTypeApi.allowedMethods());
+apiRouter.use(
+  "/comparisonTypes",
+  comparisonTypeApi.routes(),
+  comparisonTypeApi.allowedMethods()
 );
 
 router.use("/api", apiRouter.routes(), apiRouter.allowedMethods());

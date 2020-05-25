@@ -2,36 +2,41 @@ const schemaHelper = require("../schemaHelper");
 const utils = require("../../utils");
 
 const typeSchema = {
-  table: "product_attribute_value",
+  table: "productAttrValue",
   keyColumn: "id",
-  productIdColumn: "product_id",
-  attributeValueIdColumn: "attribute_value_id",
+  productIdColumn: "productId",
+  attrValueIdColumn: "attrValueId",
+  descriptionColumn: "description",
 };
 
 typeSchema.allColumns = [
   typeSchema.keyColumn,
   typeSchema.productIdColumn,
-  typeSchema.attributeValueIdColumn,
+  typeSchema.attrValueIdColumn,
+  typeSchema.descriptionColumn,
 ].concat(schemaHelper.metaColumns);
 
 typeSchema.queryColumns = []; //todo: query against view columns?
 
 typeSchema.insertColumns = [
   typeSchema.productIdColumn,
-  typeSchema.attributeValueIdColumn,
+  typeSchema.attrValueIdColumn,
+  typeSchema.descriptionColumn,
 ].concat(schemaHelper.insertMetaColumns);
 
 typeSchema.updateColumns = [
   typeSchema.keyColumn,
   typeSchema.productIdColumn,
-  typeSchema.attributeValueIdColumn,
+  typeSchema.attrValueIdColumn,
+  typeSchema.descriptionColumn,
 ].concat(schemaHelper.updateMetaColumns);
 
 typeSchema.schema = {
   ...{
     [typeSchema.keyColumn]: schemaHelper.dataTypes.number,
     [typeSchema.productIdColumn]: schemaHelper.dataTypes.number,
-    [typeSchema.attributeValueIdColumn]: schemaHelper.dataTypes.number,
+    [typeSchema.attrValueIdColumn]: schemaHelper.dataTypes.number,
+    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.stringOptional,
   },
   ...schemaHelper.metaColumnsSchema,
 };
@@ -49,7 +54,7 @@ typeSchema.denormalizedView = typeSchema.table + schemaHelper.viewSuffix;
 typeSchema.productIdNameColumn =
   typeSchema.productIdColumn + schemaHelper.viewSuffix;
 typeSchema.attributeValueIdNameColumn =
-  typeSchema.attributeValueIdColumn + schemaHelper.viewSuffix;
+  typeSchema.attrValueIdColumn + schemaHelper.viewSuffix;
 
 typeSchema.denormalizedColumns = typeSchema.allColumns
   .concat([

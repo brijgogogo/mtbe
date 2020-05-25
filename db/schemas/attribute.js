@@ -3,15 +3,15 @@ const schemaHelper = require("../schemaHelper");
 const utils = require("../../utils");
 
 const typeSchema = {
-  table: "attribute",
+  table: "attr",
   keyColumn: "id",
   nameColumn: "name",
   descriptionColumn: "description",
-  displayNameColumn: "display_name",
-  dataTypeColumn: "data_type",
-  unitTypeColumn: "unit_type",
-  attributeIdColumn: "attribute_id",
-  comparisonTypeColumn: "comparison_type",
+  displayNameColumn: "displayText",
+  dataTypeColumn: "dataType",
+  unitTypeColumn: "unitType",
+  attributeIdColumn: "baseAttrId",
+  comparisonTypeColumn: "comparisonType",
 };
 
 typeSchema.allColumns = [
@@ -77,5 +77,21 @@ typeSchema.insertSchema = schemaHelper.struct(
 typeSchema.updateSchema = schemaHelper.struct(
   utils.keepKeys(typeSchema.schema, typeSchema.updateColumns)
 );
+
+typeSchema.denormalizedView = typeSchema.table + schemaHelper.viewSuffix;
+typeSchema.dataTypeNameColumn =
+  typeSchema.dataTypeColumn + schemaHelper.viewSuffix;
+typeSchema.unitTypeNameColumn =
+  typeSchema.unitTypeColumn + schemaHelper.viewSuffix;
+typeSchema.comparisonTypeNameColumn =
+  typeSchema.comparisonTypeColumn + schemaHelper.viewSuffix;
+
+typeSchema.denormalizedColumns = typeSchema.allColumns
+  .concat([
+    typeSchema.dataTypeNameColumn,
+    typeSchema.unitTypeNameColumn,
+    typeSchema.comparisonTypeNameColumn,
+  ])
+  .concat(schemaHelper.denormalizedMetaColumns);
 
 module.exports = typeSchema;

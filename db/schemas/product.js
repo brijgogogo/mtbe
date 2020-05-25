@@ -6,54 +6,58 @@ const typeSchema = {
   table: "product",
   keyColumn: "id",
   nameColumn: "name",
-  productCodeColumn: "product_code",
-  productTypeIdColumn: "product_type_id",
-  productManufacturerIdColumn: "product_manufacturer_id",
-  baseProductIdColumn: "base_product_id",
+  productCodeColumn: "code",
   descriptionColumn: "description",
-  imagesDirColumn: "images_dir",
-  rumouredDateColumn: "rumoured_date",
-  launchDateColumn: "launch_date",
+  imagesDirColumn: "imagesDir",
+  launchDateColumn: "launchDate",
+  isLaunchedColumn: "isLaunched",
+  productTypeIdColumn: "productTypeId",
+  productManufacturerIdColumn: "productManufacturerId",
+  baseProductIdColumn: "baseProductId",
 };
 
 typeSchema.allColumns = [
   typeSchema.keyColumn,
   typeSchema.nameColumn,
-  typeSchema.productCodeColumn,
+  typeSchema.codeColumn,
+  typeSchema.descriptionColumn,
+  typeSchema.imagesDirColumn,
+  typeSchema.launchDateColumn,
+  typeSchema.isLaunchedColumn,
   typeSchema.productTypeIdColumn,
   typeSchema.productManufacturerIdColumn,
   typeSchema.baseProductIdColumn,
-  typeSchema.descriptionColumn,
-  typeSchema.imagesDirColumn,
-  typeSchema.rumouredDateColumn,
-  typeSchema.launchDateColumn,
 ].concat(schemaHelper.metaColumns);
 
-typeSchema.queryColumns = [typeSchema.nameColumn, typeSchema.descriptionColumn];
+typeSchema.queryColumns = [
+  typeSchema.nameColumn,
+  typeSchema.descriptionColumn,
+  typeSchema.codeColumn,
+];
 
 typeSchema.insertColumns = [
   typeSchema.nameColumn,
   typeSchema.productCodeColumn,
+  typeSchema.descriptionColumn,
+  typeSchema.imagesDirColumn,
+  typeSchema.launchDateColumn,
+  typeSchema.isLaunchedColumn,
   typeSchema.productTypeIdColumn,
   typeSchema.productManufacturerIdColumn,
   typeSchema.baseProductIdColumn,
-  typeSchema.descriptionColumn,
-  typeSchema.imagesDirColumn,
-  typeSchema.rumouredDateColumn,
-  typeSchema.launchDateColumn,
 ].concat(schemaHelper.insertMetaColumns);
 
 typeSchema.updateColumns = [
   typeSchema.keyColumn,
   typeSchema.nameColumn,
   typeSchema.productCodeColumn,
+  typeSchema.descriptionColumn,
+  typeSchema.imagesDirColumn,
+  typeSchema.launchDateColumn,
+  typeSchema.isLaunchedColumn,
   typeSchema.productTypeIdColumn,
   typeSchema.productManufacturerIdColumn,
   typeSchema.baseProductIdColumn,
-  typeSchema.descriptionColumn,
-  typeSchema.imagesDirColumn,
-  typeSchema.rumouredDateColumn,
-  typeSchema.launchDateColumn,
 ].concat(schemaHelper.updateMetaColumns);
 
 typeSchema.schema = {
@@ -61,13 +65,13 @@ typeSchema.schema = {
     [typeSchema.keyColumn]: schemaHelper.dataTypes.number,
     [typeSchema.nameColumn]: schemaHelper.dataTypes.string,
     [typeSchema.productCodeColumn]: schemaHelper.dataTypes.stringOptional,
+    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.stringOptional,
+    [typeSchema.imagesDirColumn]: schemaHelper.dataTypes.stringOptional,
+    [typeSchema.launchDateColumn]: schemaHelper.dataTypes.dateOptional,
+    [typeSchema.isLaunchedColumn]: schemaHelper.dataTypes.boolOptional,
     [typeSchema.productTypeIdColumn]: schemaHelper.dataTypes.number,
     [typeSchema.productManufacturerIdColumn]: schemaHelper.dataTypes.number,
     [typeSchema.baseProductIdColumn]: schemaHelper.dataTypes.numberOptional,
-    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.stringOptional,
-    [typeSchema.imagesDirColumn]: schemaHelper.dataTypes.stringOptional,
-    [typeSchema.rumouredDateColumn]: schemaHelper.dataTypes.dateOptional,
-    [typeSchema.launchDateColumn]: schemaHelper.dataTypes.dateOptional,
   },
   ...schemaHelper.metaColumnsSchema,
 };

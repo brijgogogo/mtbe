@@ -3,11 +3,11 @@ const schemaHelper = require("../schemaHelper");
 const utils = require("../../utils");
 
 const typeSchema = {
-  table: "product_type_attribute",
+  table: "productTypeAttr",
   keyColumn: "id",
-  productTypeIdColumn: "product_type_id",
-  attributeIdColumn: "attribute_id",
-  displayOrderColumn: "display_order",
+  productTypeIdColumn: "productTypeId",
+  attributeIdColumn: "attrId",
+  displayOrderColumn: "displayOrder",
   collapsibleColumn: "collapsible",
   tagsColumn: "tags",
 };

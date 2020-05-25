@@ -38,6 +38,22 @@ const dataTypes = {
   dateOptional: "date?",
 };
 
+function isOptionalType(dataType) {
+  return (
+    dataType === dataTypes.numberOptional ||
+    dataType === dataTypes.numberOptionalOrNull ||
+    dataType === dataTypes.stringOptional ||
+    dataType === dataTypes.stringOptionalOrNull ||
+    dataType === dataTypes.nonEmtpyStringOptionalOrNull ||
+    dataType === dataTypes.boolOptional ||
+    dataType === dataTypes.dateOptional
+  );
+}
+
+function isDateType(dataType) {
+  return dataType === dataTypes.date || dataType === dataTypes.dateOptional;
+}
+
 function isString(value) {
   return typeof value === "string";
 }
@@ -69,13 +85,15 @@ const schemaHelper = {
   struct: customStruct,
   dataTypes: dataTypes,
   fullCountColumn: "_full_count",
-  createdByColumn: "created_by",
-  createdDateColumn: "created_date",
-  modifiedByColumn: "modified_by",
-  modifiedDateColumn: "modified_date",
+  createdByColumn: "crtBy",
+  createdDateColumn: "crtAt",
+  modifiedByColumn: "modBy",
+  modifiedDateColumn: "modAt",
   sourceColumn: "source",
-  statusColumn: "status",
+  statusColumn: "state",
   viewSuffix: "_v",
+  isDateType: isDateType,
+  isOptionalType: isOptionalType,
 };
 
 schemaHelper.metaColumns = [
