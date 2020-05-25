@@ -7,7 +7,7 @@ const typeSchema = {
   keyColumn: "id",
   nameColumn: "name",
   descriptionColumn: "description",
-  displayNameColumn: "displayText",
+  displayTextColumn: "displayText",
   dataTypeColumn: "dataType",
   unitTypeColumn: "unitType",
   attributeIdColumn: "baseAttrId",
@@ -18,7 +18,7 @@ typeSchema.allColumns = [
   typeSchema.keyColumn,
   typeSchema.nameColumn,
   typeSchema.descriptionColumn,
-  typeSchema.displayNameColumn,
+  typeSchema.displayTextColumn,
   typeSchema.dataTypeColumn,
   typeSchema.unitTypeColumn,
   typeSchema.attributeIdColumn,
@@ -28,13 +28,13 @@ typeSchema.allColumns = [
 typeSchema.queryColumns = [
   typeSchema.nameColumn,
   typeSchema.descriptionColumn,
-  typeSchema.displayNameColumn,
+  typeSchema.displayTextColumn,
 ];
 
 typeSchema.insertColumns = [
   typeSchema.nameColumn,
   typeSchema.descriptionColumn,
-  typeSchema.displayNameColumn,
+  typeSchema.displayTextColumn,
   typeSchema.dataTypeColumn,
   typeSchema.unitTypeColumn,
   typeSchema.attributeIdColumn,
@@ -45,7 +45,7 @@ typeSchema.updateColumns = [
   typeSchema.keyColumn,
   typeSchema.nameColumn,
   typeSchema.descriptionColumn,
-  typeSchema.displayNameColumn,
+  typeSchema.displayTextColumn,
   typeSchema.dataTypeColumn,
   typeSchema.unitTypeColumn,
   typeSchema.attributeIdColumn,
@@ -56,13 +56,13 @@ typeSchema.schema = {
   ...{
     [typeSchema.keyColumn]: schemaHelper.dataTypes.number,
     [typeSchema.nameColumn]: schemaHelper.dataTypes.nonEmptyString,
-    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.string,
-    [typeSchema.displayNameColumn]: schemaHelper.dataTypes.string,
+    [typeSchema.descriptionColumn]: schemaHelper.dataTypes.stringOptionalOrNull,
+    [typeSchema.displayTextColumn]: schemaHelper.dataTypes.stringOptionalOrNull,
     [typeSchema.dataTypeColumn]: schemaHelper.dataTypes.numberOptionalOrNull,
-    [typeSchema.unitTypeColumn]: schemaHelper.dataTypes.stringOptionalOrNull,
+    [typeSchema.unitTypeColumn]: schemaHelper.dataTypes.numberOptionalOrNull,
     [typeSchema.attributeIdColumn]: schemaHelper.dataTypes.numberOptionalOrNull,
     [typeSchema.comparisonTypeColumn]:
-      schemaHelper.dataTypes.stringOptionalOrNull,
+      schemaHelper.dataTypes.numberOptionalOrNull,
   },
   ...schemaHelper.metaColumnsSchema,
 };
