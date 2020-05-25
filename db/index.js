@@ -35,7 +35,19 @@ const initOptions = {
   },
 };
 const pgp = require("pg-promise")(initOptions);
+
+// use BigInt when koa fix is found (json serialization issue)
 // pgp.pg.types.setTypeParser(20, BigInt); // Type Id 20 = BIGINT | BIGSERIAL
+// numeric
+pgp.pg.types.setTypeParser(1700, function (value) {
+  return parseFloat(value);
+});
+
+// bigint
+pgp.pg.types.setTypeParser(20, function (value) {
+  return parseInt(value);
+});
+
 const monitor = require("pg-monitor");
 monitor.attach(initOptions);
 
