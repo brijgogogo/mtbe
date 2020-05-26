@@ -14,7 +14,7 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "name": "Weight", "description": "Weight", "data_type": 1 }
+ *        { "attrId" : 4, "attrValueText": "4G", "attrValueDesc": "4G Technology" }
  *      ],
  *      "userId": 1
  *    }
@@ -26,8 +26,8 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "id": 1, "name": "Weight", "description": "Weight", "data_type": 1 }
- *            ],
+ *        { "id": 1, "attrId" : 4, "attrValueText": "4G", "attrValueDesc": "4G Technology" }
+ *      ],
  *      "userId": 1
  *    }
  */
@@ -39,18 +39,18 @@ module.exports = router;
  *
  *   {
  *      "items": [
- *          {
- *              "id": 11,
- *              "attribute_id": 4,
- *              "attribute_value_name": "4G",
- *              "attribute_value_desc": "4G Technology",
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:48:13.668Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *        {
+ *            "id": 1,
+ *            "attrId": 4,
+ *            "attrValueText": "4G",
+ *            "attrValueDesc": "4G Technology",
+ *            "crtBy": 1,
+ *            "crtAt": "2020-05-24T23:00:00.000Z",
+ *            "modAt": null,
+ *            "modBy": null,
+ *            "source": null,
+ *            "state": 1
+ *        }
  *      ]
  *  }
  */
@@ -60,18 +60,18 @@ module.exports = router;
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  [
- *          {
- *              "id": 11,
- *              "attribute_id": 4,
- *              "attribute_value_name": "4G",
- *              "attribute_value_desc": "4G Technology",
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:48:13.668Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *        {
+ *            "id": 1,
+ *            "attrId": 4,
+ *            "attrValueText": "4G",
+ *            "attrValueDesc": "4G Technology",
+ *            "crtBy": 1,
+ *            "crtAt": "2020-05-24T23:00:00.000Z",
+ *            "modAt": null,
+ *            "modBy": null,
+ *            "source": null,
+ *            "state": 1
+ *        }
  *  ]
  */
 
@@ -86,18 +86,18 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  {
  *      "items": [
- *          {
- *              "id": 11,
- *              "attribute_id": 4,
- *              "attribute_value_name": "4G",
- *              "attribute_value_desc": "4G Technology",
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:48:13.668Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *        {
+ *            "id": 1,
+ *            "attrId": 4,
+ *            "attrValueText": "4G",
+ *            "attrValueDesc": "4G Technology",
+ *            "crtBy": 1,
+ *            "crtAt": "2020-05-24T23:00:00.000Z",
+ *            "modAt": null,
+ *            "modBy": null,
+ *            "source": null,
+ *            "state": 1
+ *        }
  *      ]
  *  }
  *

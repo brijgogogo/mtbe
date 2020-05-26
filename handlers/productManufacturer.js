@@ -14,8 +14,8 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *                    { "name": "Apple", "website_url": "apple.com" }
- *            ],
+ *          { "name": "AppleInc", "websiteUrl": "apple.com" } *
+ *      ],
  *      "userId": 1
  *    }
  */
@@ -26,7 +26,7 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *                    { "id": 1, "name": "Apple", "website_url": "apple.com" }
+ *          { "id": 1, "name": "AppleInc", "websiteUrl": "apple.com" } *
  *            ],
  *      "userId": 1
  *    }
@@ -39,17 +39,18 @@ module.exports = router;
  *
  *   {
  *      "items": [
- *          {
- *              "id": 30,
- *              "name": "Apple",
- *              "website_url": "apple.com",
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:01:52.229Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *         {
+ *             "id": 3,
+ *             "name": "AppleInc",
+ *             "description": null,
+ *             "websiteUrl": "apple.com",
+ *             "crtBy": 1,
+ *             "crtAt": "2020-05-24T23:00:00.000Z",
+ *             "modAt": null,
+ *             "modBy": null,
+ *             "source": null,
+ *             "state": 1
+ *         }
  *      ]
  *  }
  */
@@ -59,17 +60,18 @@ module.exports = router;
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  [
- *          {
- *              "id": 30,
- *              "name": "Apple",
- *              "website_url": "apple.com",
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:01:52.229Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *         {
+ *             "id": 3,
+ *             "name": "AppleInc",
+ *             "description": null,
+ *             "websiteUrl": "apple.com",
+ *             "crtBy": 1,
+ *             "crtAt": "2020-05-24T23:00:00.000Z",
+ *             "modAt": null,
+ *             "modBy": null,
+ *             "source": null,
+ *             "state": 1
+ *         }
  *  ]
  */
 
@@ -84,28 +86,18 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  {
  *      "items": [
- *          {
- *              "id": 1,
- *              "name": "Samsung",
- *              "website_url": "samsung.com",
- *              "created_by": 1,
- *              "created_date": "2020-04-19T19:14:33.661Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          },
- *          {
- *              "id": 6,
- *              "name": "OnePlus",
- *              "website_url": "http://oneplus.com",
- *              "created_by": 1,
- *              "created_date": "2020-04-19T19:14:33.661Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *         {
+ *             "id": 3,
+ *             "name": "AppleInc",
+ *             "description": null,
+ *             "websiteUrl": "apple.com",
+ *             "crtBy": 1,
+ *             "crtAt": "2020-05-24T23:00:00.000Z",
+ *             "modAt": null,
+ *             "modBy": null,
+ *             "source": null,
+ *             "state": 1
+ *         }
  *      ]
  *  }
  *

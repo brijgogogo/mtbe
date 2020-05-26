@@ -14,7 +14,7 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "name": "Weight", "description": "Weight", "data_type": 1 }
+ *        {"name": "abc", "description":null,"displayText":"","baseAttrId":null,"dataType":null,"unitType":null,"comparisonType":null,"state":1,"crtAt":"2020-05-14T14:42:51.838Z","crtBy":1}
  *      ],
  *      "userId": 1
  *    }
@@ -26,8 +26,8 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "id" : 1, "name": "Weight", "description": "Weight", "data_type": 1 }
- *            ],
+ *        { "id": 1, "name": "abc", "description":null,"displayText":"","baseAttrId":null,"dataType":null,"unitType":null,"comparisonType":null,"state":1,"crtAt":"2020-05-14T14:42:51.838Z","crtBy":1}
+ *      ],
  *      "userId": 1
  *    }
  */
@@ -39,22 +39,22 @@ module.exports = router;
  *
  *   {
  *      "items": [
- *        {
- *            "id": 1,
- *            "name": "Color",
- *            "description": null,
- *            "display_name": "Color",
- *            "data_type": 1,
- *            "unit_type": null,
- *            "attribute_id": null,
- *            "comparison_type": null,
- *            "created_by": 1,
- *            "created_date": "2020-05-09T16:26:36.963Z",
- *            "modified_by": null,
- *            "modified_date": null,
- *            "source": null,
- *            "status": 1
- *        }
+ *          {
+ *              "id": 5,
+ *              "name": "abc",
+ *              "description": null,
+ *              "displayText": "",
+ *              "dataType": null,
+ *              "unitType": null,
+ *              "comparisonType": null,
+ *              "baseAttrId": null,
+ *              "crtBy": 1,
+ *              "crtAt": "2020-05-24T23:00:00.000Z",
+ *              "modAt": null,
+ *              "modBy": null,
+ *              "source": null,
+ *              "state": 1
+ *          }
  *      ]
  *  }
  */
@@ -64,22 +64,22 @@ module.exports = router;
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  [
- *        {
- *            "id": 1,
- *            "name": "Color",
- *            "description": null,
- *            "display_name": "Color",
- *            "data_type": 1,
- *            "unit_type": null,
- *            "attribute_id": null,
- *            "comparison_type": null,
- *            "created_by": 1,
- *            "created_date": "2020-05-09T16:26:36.963Z",
- *            "modified_by": null,
- *            "modified_date": null,
- *            "source": null,
- *            "status": 1
- *        }
+ *          {
+ *              "id": 5,
+ *              "name": "abc",
+ *              "description": null,
+ *              "displayText": "",
+ *              "dataType": null,
+ *              "unitType": null,
+ *              "comparisonType": null,
+ *              "baseAttrId": null,
+ *              "crtBy": 1,
+ *              "crtAt": "2020-05-24T23:00:00.000Z",
+ *              "modAt": null,
+ *              "modBy": null,
+ *              "source": null,
+ *              "state": 1
+ *          }
  *  ]
  */
 
@@ -94,22 +94,22 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  {
  *      "items": [
- *        {
- *            "id": 1,
- *            "name": "Color",
- *            "description": null,
- *            "display_name": "Color",
- *            "data_type": 1,
- *            "unit_type": null,
- *            "attribute_id": null,
- *            "comparison_type": null,
- *            "created_by": 1,
- *            "created_date": "2020-05-09T16:26:36.963Z",
- *            "modified_by": null,
- *            "modified_date": null,
- *            "source": null,
- *            "status": 1
- *        }
+ *          {
+ *              "id": 5,
+ *              "name": "abc",
+ *              "description": null,
+ *              "displayText": "",
+ *              "dataType": null,
+ *              "unitType": null,
+ *              "comparisonType": null,
+ *              "baseAttrId": null,
+ *              "crtBy": 1,
+ *              "crtAt": "2020-05-24T23:00:00.000Z",
+ *              "modAt": null,
+ *              "modBy": null,
+ *              "source": null,
+ *              "state": 1
+ *          }
  *      ]
  *  }
  *

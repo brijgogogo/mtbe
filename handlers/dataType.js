@@ -15,7 +15,13 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "name": "Furniture", "description": "Furniture", "product_type_id": null }
+ *        {
+ *            "name": "text",
+ *            "description": "text based data",
+ *            "displayText": "text",
+ *            "source": "System",
+ *            "state": 1
+ *        },
  *      ],
  *      "userId": 1
  *    }
@@ -27,7 +33,14 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "id" : 1, "name": "Furniture", "description": "Furniture", "product_type_id": null }
+ *        {
+ *          "id": 1,
+ *          "name": "text",
+ *          "description": "text based data",
+ *          "displayText": "text",
+ *          "source": "System",
+ *          "state": 1
+ *        }
  *            ],
  *      "userId": 1
  *    }
@@ -40,18 +53,18 @@ module.exports = router;
  *
  *   {
  *      "items": [
- *         {
- *              "id": 20,
- *              "name": "Electronics",
- *              "description": "Products running with battery or electricity",
- *              "product_type_id": null,
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:33:05.045Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *        {
+ *            "id": 1,
+ *            "name": "text",
+ *            "description": "text based data",
+ *            "displayText": "text",
+ *            "crtBy": 1,
+ *            "crtAt": "2020-05-25T21:27:41.582Z",
+ *            "modBy": null,
+ *            "modAt": null,
+ *            "source": "System",
+ *            "state": 1
+ *        }
  *      ]
  *  }
  */
@@ -61,18 +74,18 @@ module.exports = router;
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  [
- *         {
- *              "id": 20,
- *              "name": "Electronics",
- *              "description": "Products running with battery or electricity",
- *              "product_type_id": null,
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:33:05.045Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *        {
+ *            "id": 1,
+ *            "name": "text",
+ *            "description": "text based data",
+ *            "displayText": "text",
+ *            "crtBy": 1,
+ *            "crtAt": "2020-05-25T21:27:41.582Z",
+ *            "modBy": null,
+ *            "modAt": null,
+ *            "source": "System",
+ *            "state": 1
+ *        }
  *  ]
  */
 
@@ -87,18 +100,18 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  {
  *      "items": [
- *         {
- *              "id": 20,
- *              "name": "Electronics",
- *              "description": "Products running with battery or electricity",
- *              "product_type_id": null,
- *              "created_by": 1,
- *              "created_date": "2020-05-11T22:33:05.045Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
- *          }
+ *        {
+ *            "id": 1,
+ *            "name": "text",
+ *            "description": "text based data",
+ *            "displayText": "text",
+ *            "crtBy": 1,
+ *            "crtAt": "2020-05-25T21:27:41.582Z",
+ *            "modBy": null,
+ *            "modAt": null,
+ *            "source": "System",
+ *            "state": 1
+ *        }
  *      ],
  *      "totalCount": 1
  *  }

@@ -14,7 +14,8 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "product_id": 2, "attribute_value_id" : 1 } *      ],
+ *         { "productId": 3, "attrValueId" : 1 }
+ *      ],
  *      "userId": 1
  *    }
  */
@@ -25,7 +26,7 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "productAttributeValue_type_id": 5, "attribute_id": 1, "display_order" : 1, "collapsible": false, "tags" : "General"}
+ *         { "id": 1, "productId": 3, "attrValueId" : 1 }
  *      ],
  *      "userId": 1
  *    }
@@ -38,17 +39,18 @@ module.exports = router;
  *
  *   {
  *      "items": [
- *        {
- *          "id": 2,
- *          "product_id": 2,
- *          "attribute_value_id": 1,
- *          "created_by": 1,
- *          "created_date": "2020-05-20T23:50:13.757Z",
- *          "modified_by": null,
- *          "modified_date": null,
- *          "source": null,
- *          "status": 1
- *        }
+ *         {
+ *             "id": 3,
+ *             "productId": 3,
+ *             "attrValueId": 1,
+ *             "description": null,
+ *             "crtBy": 1,
+ *             "crtAt": "2020-05-25T23:00:00.000Z",
+ *             "modAt": null,
+ *             "modBy": null,
+ *             "source": null,
+ *             "state": 1
+ *         }
  *      ]
  *  }
  */
@@ -58,17 +60,18 @@ module.exports = router;
  * @apiSuccessExample Success-Response:
  *  HTTP/1.1 200 OK
  *  [
- *        {
- *          "id": 2,
- *          "product_id": 2,
- *          "attribute_value_id": 1,
- *          "created_by": 1,
- *          "created_date": "2020-05-20T23:50:13.757Z",
- *          "modified_by": null,
- *          "modified_date": null,
- *          "source": null,
- *          "status": 1
- *        }
+ *         {
+ *             "id": 3,
+ *             "productId": 3,
+ *             "attrValueId": 1,
+ *             "description": null,
+ *             "crtBy": 1,
+ *             "crtAt": "2020-05-25T23:00:00.000Z",
+ *             "modAt": null,
+ *             "modBy": null,
+ *             "source": null,
+ *             "state": 1
+ *         }
  *  ]
  */
 
@@ -83,17 +86,18 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  {
  *      "items": [
- *        {
- *          "id": 2,
- *          "product_id": 2,
- *          "attribute_value_id": 1,
- *          "created_by": 1,
- *          "created_date": "2020-05-20T23:50:13.757Z",
- *          "modified_by": null,
- *          "modified_date": null,
- *          "source": null,
- *          "status": 1
- *        }
+ *         {
+ *             "id": 3,
+ *             "productId": 3,
+ *             "attrValueId": 1,
+ *             "description": null,
+ *             "crtBy": 1,
+ *             "crtAt": "2020-05-25T23:00:00.000Z",
+ *             "modAt": null,
+ *             "modBy": null,
+ *             "source": null,
+ *             "state": 1
+ *         }
  *      ],
  *      "totalCount": 1
  *  }

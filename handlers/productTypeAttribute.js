@@ -14,7 +14,15 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *        { "name": "Samsung Galaxy 1", "product_code": "SMG1", "product_type_id": 4, "product_manufacturer_id": 1, "description": "Samsung phone" }
+ *          {
+ *              "productTypeId": 1,
+ *              "attrId": 1,
+ *              "displayOrder": 1,
+ *              "collapsible": true,
+ *              "tags": "tag1,tag2",
+ *              "source": "System",
+ *              "state": 1
+ *          }
  *      ],
  *      "userId": 1
  *    }
@@ -26,7 +34,16 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *        { "id": 1, "name": "Samsung Galaxy 1", "product_code": "SMG1", "product_type_id": 4, "product_manufacturer_id": 1, "description": "Samsung phone" }
+ *          {
+ *              "id": 1,
+ *              "productTypeId": 1,
+ *              "attrId": 1,
+ *              "displayOrder": 1,
+ *              "collapsible": true,
+ *              "tags": "tag1,tag2",
+ *              "source": "System",
+ *              "state": 1
+ *          }
  *      ],
  *      "userId": 1
  *    }
@@ -40,22 +57,14 @@ module.exports = router;
  *   {
  *      "items": [
  *          {
- *              "id": 2,
- *              "name": "Samsung Galaxy 1",
- *              "product_code": "SMG1",
- *              "product_type_id": 4,
- *              "product_manufacturer_id": 1,
- *              "base_product_id": null,
- *              "description": "Samsung phone",
- *              "images_dir": null,
- *              "rumoured_date": null,
- *              "launch_date": null,
- *              "created_by": 1,
- *              "created_date": "2020-05-13T23:52:25.924Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
+ *              "id": 1,
+ *              "productTypeId": 1,
+ *              "attrId": 1,
+ *              "displayOrder": 1,
+ *              "collapsible": true,
+ *              "tags": "tag1,tag2",
+ *              "source": "System",
+ *              "state": 1
  *          }
  *      ]
  *  }
@@ -67,22 +76,15 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  [
  *          {
- *              "id": 2,
- *              "name": "Samsung Galaxy 1",
- *              "product_code": "SMG1",
- *              "product_type_id": 4,
- *              "product_manufacturer_id": 1,
- *              "base_product_id": null,
- *              "description": "Samsung phone",
- *              "images_dir": null,
- *              "rumoured_date": null,
- *              "launch_date": null,
- *              "created_by": 1,
- *              "created_date": "2020-05-13T23:52:25.924Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
+ *              "id": 1,
+ *              "productTypeId": 1,
+ *              "attrId": 1,
+ *              "displayOrder": 1,
+ *              "collapsible": true,
+ *              "tags": "tag1,tag2",
+ *              "source": "System",
+ *              "state": 1
+ *          }
  *  ]
  */
 
@@ -98,22 +100,15 @@ module.exports = router;
  *  {
  *      "items": [
  *          {
- *              "id": 2,
- *              "name": "Samsung Galaxy 1",
- *              "product_code": "SMG1",
- *              "product_type_id": 4,
- *              "product_manufacturer_id": 1,
- *              "base_product_id": null,
- *              "description": "Samsung phone",
- *              "images_dir": null,
- *              "rumoured_date": null,
- *              "launch_date": null,
- *              "created_by": 1,
- *              "created_date": "2020-05-13T23:52:25.924Z",
- *              "modified_by": null,
- *              "modified_date": null,
- *              "source": null,
- *              "status": 1
+ *              "id": 1,
+ *              "productTypeId": 1,
+ *              "attrId": 1,
+ *              "displayOrder": 1,
+ *              "collapsible": true,
+ *              "tags": "tag1,tag2",
+ *              "source": "System",
+ *              "state": 1
+ *          }
  *      ],
  *      "totalCount": 1
  *  }

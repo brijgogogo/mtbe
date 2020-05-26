@@ -14,7 +14,13 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "product_type_id": 5, "attribute_id": 1, "display_order" : 1, "collapsible": false, "tags" : "General"}
+ *          {
+ *            "name": "Samsung Galaxy 1",
+ *            "code": "SMG1",
+ *            "productTypeId": 1,
+ *            "productManufacturerId": 1,
+ *            "description": "Samsung phone"
+ *          }
  *      ],
  *      "userId": 1
  *    }
@@ -26,7 +32,14 @@ module.exports = router;
  *
  *    {
  *      "items": [
- *         { "id": 1, "product_type_id": 5, "attribute_id": 1, "display_order" : 1, "collapsible": false, "tags" : "General"}
+ *          {
+ *            "id": 1,
+ *            "name": "Samsung Galaxy 1",
+ *            "code": "SMG1",
+ *            "productTypeId": 1,
+ *            "productManufacturerId": 1,
+ *            "description": "Samsung phone"
+ *          }
  *      ],
  *      "userId": 1
  *    }
@@ -40,18 +53,24 @@ module.exports = router;
  *   {
  *      "items": [
  *        {
- *            "id": 6,
- *            "product_type_id": 5,
- *            "attribute_id": 1,
- *            "display_order": 1,
- *            "collapsible": false,
- *            "tags": "General",
- *            "created_by": 1,
- *            "created_date": "2020-05-12T22:48:25.307Z",
- *            "modified_by": null,
- *            "modified_date": null,
- *            "source": null,
- *            "status": 1
+ *      {
+ *          "id": 3,
+ *          "name": "Samsung Galaxy 1",
+ *          "code": "SMG1",
+ *          "description": "Samsung phone",
+ *          "imagesDir": null,
+ *          "launchDate": null,
+ *          "isLaunched": null,
+ *          "productTypeId": 1,
+ *          "productManufacturerId": 1,
+ *          "baseProductId": null,
+ *          "crtBy": 1,
+ *          "crtAt": "2020-05-24T23:00:00.000Z",
+ *          "modAt": null,
+ *          "modBy": null,
+ *          "source": null,
+ *          "state": 1
+ *      }
  *        }
  *      ]
  *  }
@@ -63,18 +82,22 @@ module.exports = router;
  *  HTTP/1.1 200 OK
  *  [
  *        {
- *            "id": 6,
- *            "product_type_id": 5,
- *            "attribute_id": 1,
- *            "display_order": 1,
- *            "collapsible": false,
- *            "tags": "General",
- *            "created_by": 1,
- *            "created_date": "2020-05-12T22:48:25.307Z",
- *            "modified_by": null,
- *            "modified_date": null,
- *            "source": null,
- *            "status": 1
+ *          "id": 3,
+ *          "name": "Samsung Galaxy 1",
+ *          "code": "SMG1",
+ *          "description": "Samsung phone",
+ *          "imagesDir": null,
+ *          "launchDate": null,
+ *          "isLaunched": null,
+ *          "productTypeId": 1,
+ *          "productManufacturerId": 1,
+ *          "baseProductId": null,
+ *          "crtBy": 1,
+ *          "crtAt": "2020-05-24T23:00:00.000Z",
+ *          "modAt": null,
+ *          "modBy": null,
+ *          "source": null,
+ *          "state": 1
  *        }
  *  ]
  */
@@ -91,18 +114,22 @@ module.exports = router;
  *  {
  *      "items": [
  *        {
- *            "id": 6,
- *            "product_type_id": 5,
- *            "attribute_id": 1,
- *            "display_order": 1,
- *            "collapsible": false,
- *            "tags": "General",
- *            "created_by": 1,
- *            "created_date": "2020-05-12T22:48:25.307Z",
- *            "modified_by": null,
- *            "modified_date": null,
- *            "source": null,
- *            "status": 1
+ *          "id": 3,
+ *          "name": "Samsung Galaxy 1",
+ *          "code": "SMG1",
+ *          "description": "Samsung phone",
+ *          "imagesDir": null,
+ *          "launchDate": null,
+ *          "isLaunched": null,
+ *          "productTypeId": 1,
+ *          "productManufacturerId": 1,
+ *          "baseProductId": null,
+ *          "crtBy": 1,
+ *          "crtAt": "2020-05-24T23:00:00.000Z",
+ *          "modAt": null,
+ *          "modBy": null,
+ *          "source": null,
+ *          "state": 1
  *        }
  *      ],
  *      "totalCount": 1

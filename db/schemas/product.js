@@ -19,7 +19,7 @@ const typeSchema = {
 typeSchema.allColumns = [
   typeSchema.keyColumn,
   typeSchema.nameColumn,
-  typeSchema.codeColumn,
+  typeSchema.productCodeColumn,
   typeSchema.descriptionColumn,
   typeSchema.imagesDirColumn,
   typeSchema.launchDateColumn,
